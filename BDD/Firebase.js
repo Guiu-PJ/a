@@ -1,5 +1,5 @@
-import { firestore } from './firebaseConfig'; // Importa Firestore desde firebaseConfig
-import { doc, setDoc, getDoc } from '../node_modules/firebase/firestore';
+//import { firestore } from './firebaseConfig'; // Importa Firestore desde firebaseConfig
+//import { doc, setDoc, getDoc } from '../node_modules/firebase/firestore';
 
 ///////////////////////////////GAME///////////////////////////////
 // Función para guardar un juego en Firestore
@@ -11,7 +11,7 @@ import { doc, setDoc, getDoc } from '../node_modules/firebase/firestore';
             await setDoc(gameRef, gameData); // Guarda el objeto JSON en Firestore
             console.log('Juego guardado con éxito!');
         } catch (error) {
-            console.error('Error al guardar el juego:', error);
+            console.error('Error al guardar el juego:', error);ºº
         }
     }
 
