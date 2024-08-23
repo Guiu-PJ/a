@@ -1,6 +1,6 @@
 const { initializeApp } = require('firebase/app');
-//import { getAuth } from '../node_modules/firebase/auth';
-//import { getFirestore } from '../node_modules/firebase/firestore';
+const { getAuth } = require('firebase/auth');
+const { getFirestore } = require('firebase/firestore');
 
 // Configuración de Firebase
 const firebaseConfig = {
