@@ -1,5 +1,5 @@
 import { firestore } from './FirebaseConfig.js'; // Importa Firestore desde firebaseConfig
-import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+import { collection, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 ///////////////////////////////GAME///////////////////////////////
 // Función para guardar un juego en Firestore
@@ -50,7 +50,7 @@ import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/
     ///////////////////////////////GameMode///////////////////////////////
     // Función para recuperar todos los gameMode desde Firestore
     async function getAllGameMode() {
-        const gameModeRef = Collection(firebase, 'gameMode'); // Referencia a la colección
+        const gameModeRef = collection(firebase, 'gameMode'); // Referencia a la colección
         try {
             const querySnapshot = await getDocs(gameModeRef); 
             const gameModes = [];
