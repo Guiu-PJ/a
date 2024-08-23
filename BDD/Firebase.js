@@ -11,7 +11,7 @@
             await setDoc(gameRef, gameData); // Guarda el objeto JSON en Firestore
             console.log('Juego guardado con éxito!');
         } catch (error) {
-            console.error('Error al guardar el juego:', error);ºº
+            console.error('Error al guardar el juego:', error);
         }
     }
 
