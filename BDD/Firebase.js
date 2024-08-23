@@ -1,4 +1,4 @@
-import { firestore } from './firebaseConfig.js'; // Importa Firestore desde firebaseConfig
+import { firestore } from './FirebaseConfig.js'; // Importa Firestore desde firebaseConfig
 import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
 ///////////////////////////////GAME///////////////////////////////
