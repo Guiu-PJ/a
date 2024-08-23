@@ -21,3 +21,4 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 console.log('Firebase initialized', { auth, firestore });
+export { auth, firestore };
