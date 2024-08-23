@@ -19,7 +19,7 @@ import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/
     // Función para guardar un jugador en Firestore
     async function savePlayer(player) {
         const playerData = player.toJSON(); 
-        const playerRef = doc(firestore, 'players', player.playerId); // Crea una referencia a la colección 'players' y el documento con el playerId
+        const playerRef = doc(firestore, 'player', player.playerId); // Crea una referencia a la colección 'players' y el documento con el playerId
     
         try {
             await setDoc(playerRef, playerData); // Guarda el objeto JSON en Firestore
@@ -31,7 +31,7 @@ import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/
 
     // Función para recuperar un jugador desde Firestore
     async function getPlayer(playerId) {
-        const playerRef = doc(firestore, 'players', playerId); // Crea una referencia al documento del jugador
+        const playerRef = doc(firestore, 'player', playerId); // Crea una referencia al documento del jugador
         try {
             const docSnap = await getDoc(playerRef); // Obtén el documento
             if (docSnap.exists()) {
@@ -47,5 +47,23 @@ import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/
         }
     }
 
-export { saveGame, savePlayer, getPlayer };
+    ///////////////////////////////GameMode///////////////////////////////
+    // Función para recuperar todos los gameMode desde Firestore
+    async function getAllGameMode() {
+        const gameModeRef = Collection(firebase, 'gameMode'); // Referencia a la colección
+        try {
+            const querySnapshot = await getDocs(gameModeRef); 
+            const gameModes = [];
+            querySnapshot.forEach((doc) => {
+                gameModes.push({id: doc.id, name: doc.name, mode: doc.mode})
+            });
+            console.log('Datos de los gamemode: ' gameModes);
+        } catch (error) {
+            console.error('Error al obtener los datos de los gamemode:', error);
+            return null;
+        }
+    }
+
+
+export { saveGame, savePlayer, getPlayer, getAllGameMode };
 

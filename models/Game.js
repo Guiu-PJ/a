@@ -1,11 +1,11 @@
 class Game {
     // Constructor para inicializar el objeto
-    constructor(mode, questions) {
+    constructor(modeId, questions) {
         this.gameId = this.generateUniqueId();
         this.players = {};
         this.currentQuestionIndex = 0;
         this.questions = questions;
-        this.mode = mode;
+        this.modeId = modeId;
         this.status = "waiting";
     }
 
