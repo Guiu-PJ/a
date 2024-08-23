@@ -1,7 +1,6 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
-import { getAuth } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js';
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js';
-
+import { initializeApp } from '../node_modules/firebase/app';
+import { getAuth } from '../node_modules/firebase/auth';
+import { getFirestore } from '../node_modules/firebase/firestore';
 
 // Configuración de Firebase
 const firebaseConfig = {
