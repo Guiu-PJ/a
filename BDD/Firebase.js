@@ -57,7 +57,7 @@ import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/
             querySnapshot.forEach((doc) => {
                 gameModes.push({id: doc.id, name: doc.name, mode: doc.mode})
             });
-            console.log('Datos de los gamemode: ' gameModes);
+            console.log('Datos de los gamemode: ', gameModes);
         } catch (error) {
             console.error('Error al obtener los datos de los gamemode:', error);
             return null;
