@@ -3,6 +3,7 @@ import { savePlayer } from '../BDD/Firebase.js';
 
 
 document.getElementById('createUser').addEventListener('click', createUser);
+document.getElementById('createGame').addEventListener('click', createGame);
 
 // Función para manejar la creación del usuario
 function createUser() {
@@ -26,4 +27,9 @@ function createUser() {
         alert('El nombre del usuario no puede estar vacío.');
     }
 }
+
+function createGame(){
+
+}
+
 
