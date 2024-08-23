@@ -50,7 +50,7 @@ import { collection, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebas
     ///////////////////////////////GameMode///////////////////////////////
     // Función para recuperar todos los gameMode desde Firestore
     async function getAllGameMode() {
-        const gameModeRef = collection(firebase, 'gameMode'); // Referencia a la colección
+        const gameModeRef = collection(firestore, 'gameMode'); // Referencia a la colección
         try {
             const querySnapshot = await getDocs(gameModeRef); 
             const gameModes = [];
