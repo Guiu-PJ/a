@@ -1,5 +1,5 @@
-import Player from './Player';
-import { savePlayer } from './Firebase';
+import Player from '../models/Player';
+import { savePlayer } from '../BDD/Firebase';
 
 
 document.getElementById('createUser').addEventListener('click', createUser);
