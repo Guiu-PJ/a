@@ -52,7 +52,7 @@ import { collection, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebas
     async function getAllGameMode() {
         const gameModeRef = collection(firestore, 'gameMode'); // Referencia a la colección
         try {
-            const querySnapshot = await getDocs(gameModeRef); 
+            const querySnapshot = await getDoc(gameModeRef); 
             const gameModes = [];
             querySnapshot.forEach((doc) => {
                 gameModes.push({id: doc.id, name: doc.name, mode: doc.mode})
