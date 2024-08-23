@@ -1,5 +1,5 @@
 import { firestore } from './firebaseConfig'; // Importa Firestore desde firebaseConfig
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from '../node_modules/firebase/firestore';
 
 ///////////////////////////////GAME///////////////////////////////
 // Función para guardar un juego en Firestore
