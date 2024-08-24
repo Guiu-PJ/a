@@ -16,9 +16,11 @@ async function displayGameModes() {
         return;
     }
 
-    // Construir el contenido a mostrar
-    const gameModesTexts = gameModes.map(gameMode => `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`); // Ajusta esto según la estructura de tu documento
-    gameModesListElement.innerHTML = gameModesTexts.join('<br>'); // Unir todos los jugadores con una línea nueva
+    gameModes.forEach(gamemOde => {
+        const gameModeDiv = document.createElement('div');
+        gameModeDiv.textContent = `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
+        container.appendChild(gameModeDiv);
+    });
 }
 
 // Llamar a la función para obtener y mostrar los jugadores cuando se cargue la página
