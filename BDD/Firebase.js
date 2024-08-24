@@ -6,7 +6,8 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
     async function saveGame(game) {
         const gameData = game.toJSON(); // Convierte la instancia del juego en un objeto JSON
         const gameRef = doc(firestore, 'games', game.gameId); // Crea una referencia a la colección 'games' y el documento con el gameId
-    
+    console.log('aaa = ', gameRef);
+    console.log('bbb =', gameData);
         try {
             await setDoc(gameRef, gameData); // Guarda el objeto JSON en Firestore
             console.log('Juego guardado con éxito!');
