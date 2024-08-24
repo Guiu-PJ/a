@@ -6,12 +6,12 @@ import { getAllGameMode } from '../BDD/Firebase.js';
 
 
 
-function displayGameModes() {
-    const gameModes = getAllGameMode();
+async function displayGameModes() {
+    const gameModes = await getAllGameMode(); // Esperar a que se resuelvan los datos
     const gameModesListElement = document.getElementById('a'); // Obtener el elemento <p> donde se mostrará la lista
     gameModesListElement.innerHTML = ''; // Limpiar cualquier contenido previo
 
-    if (gameModes.length === 0) {
+    if (!gameModes || gameModes.length === 0) { // Verificar si gameModes es null o está vacío
         gameModesListElement.textContent = 'No se encontraron gameModes.';
         return;
     }
