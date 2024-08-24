@@ -4,8 +4,10 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
 ///////////////////////////////GAME///////////////////////////////
 // Función para guardar un juego en Firestore
     async function saveGame(game) {
+        console.log('gggg');
         const gameData = game.toJSON(); // Convierte la instancia del juego en un objeto JSON
-        const gameRef = doc(firestore, 'games', game.gameId); // Crea una referencia a la colección 'games' y el documento con el gameId
+        console.log('pppp');
+        const gameRef = doc(firestore, 'game', game.gameId); // Crea una referencia a la colección 'games' y el documento con el gameId
     console.log('aaa = ', gameRef);
     console.log('bbb =', gameData);
         try {
