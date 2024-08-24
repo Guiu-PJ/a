@@ -16,7 +16,7 @@ async function displayGameModes() {
         return;
     }
 
-    gameModes.forEach(gamemOde => {
+    gameModes.forEach(gameMode => {
         const gameModeDiv = document.createElement('div');
         gameModeDiv.textContent = `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
         container.appendChild(gameModeDiv);
