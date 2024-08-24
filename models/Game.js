@@ -1,10 +1,10 @@
 class Game {
     // Constructor para inicializar el objeto
-    constructor(modeId, questions) {
-        this.gameId = this.generateUniqueId();
+    constructor(modeId, name) {
+        this.id = this.generateUniqueId();
         this.players = {};
         this.currentQuestionIndex = 0;
-        this.questions = questions;
+        this.name = name;
         this.modeId = modeId;
         this.status = "waiting";
     }
@@ -20,19 +20,14 @@ class Game {
         this.players[playerId] = { name: playerName, score: 0 };
     }
 
-    // Método para mostrar la pregunta actual
-    getCurrentQuestion() {
-        return this.questions[this.currentQuestionIndex];
-    }
-
     // Método para convertir la instancia en un objeto JSON
     toJSON() {
         return {
-            gameId: this.gameId,
+            id: this.id,
             players: this.players,
             currentQuestionIndex: this.currentQuestionIndex,
-            questions: this.questions,
             mode: this.mode,
+            name: this.name,
             status: this.status
         };
     }
