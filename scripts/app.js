@@ -27,8 +27,4 @@ function createUser() {
     }
 }
 
-function createGame(){
-
-}
-
 

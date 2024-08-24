@@ -35,7 +35,7 @@ function createGame(gameModeId) {
     if (gameName) {
         // Crear una nueva instancia de Game con el nombre ingresado
         const newGame = new Game(gameModeId, gameName);
-        
+        console.log('aaaaaaa = ', newGame)
         // Guardar nueva partida en Firestore
         saveGame(newGame)
             .then(() => {
