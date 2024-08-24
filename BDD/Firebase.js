@@ -55,7 +55,8 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
             const querySnapshot = await getDocs(gameModeRef); 
             const gameModes = [];
             querySnapshot.forEach((doc) => {
-                gameModes.push({id: doc.id, name: doc.name, mode: doc.mode})
+                const data = doc.data()
+                gameModes.push({id: doc.id, name: data.name, mode: data.mode})
             });
             console.log('Datos de los gamemode: ', gameModes);
         } catch (error) {

@@ -22,4 +22,4 @@ function displayGameModes() {
 }
 
 // Llamar a la función para obtener y mostrar los jugadores cuando se cargue la página
-document.addEventListener('DOMContentLoaded', getAllGameMode);
+document.addEventListener('DOMContentLoaded', displayGameModes());
