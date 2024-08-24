@@ -59,6 +59,7 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
                 gameModes.push({id: doc.id, name: data.name, mode: data.mode})
             });
             console.log('Datos de los gamemode: ', gameModes);
+            return gameModes;
         } catch (error) {
             console.error('Error al obtener los datos de los gamemode:', error);
             return null;
