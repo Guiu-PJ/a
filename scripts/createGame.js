@@ -1,4 +1,4 @@
-import { getAllGameMode } from '../BDD/Firebase.js';
+import { getAllGameMode, saveGame } from '../BDD/Firebase.js';
 import Game from '../models/Game.js'
 
 //const text = document.getElementById('a').addEventListener('click', createGame);
@@ -21,7 +21,7 @@ async function displayGameModes() {
         const gameModeDiv = document.createElement('div');
         gameModeDiv.textContent = `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
          gameModeDiv.addEventListener('click', () => {
-            createGame(gameMode.id); 
+            createGame(gameMode.id);
             window.location.href = 'index.html'; 
         });
         container.appendChild(gameModeDiv);
