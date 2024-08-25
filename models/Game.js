@@ -26,7 +26,7 @@ class Game {
             id: this.id,
             players: this.players,
             currentQuestionIndex: this.currentQuestionIndex,
-            mode: this.mode,
+            modeId: this.modeId,
             name: this.name,
             status: this.status
         };
