@@ -1,3 +1,5 @@
+import { getgameById, saveGameState} from '../BDD/Firebase.js';
+
 class Game {
     // Constructor para inicializar el objeto
     constructor(modeId, name) {
@@ -33,10 +35,10 @@ class Game {
     }
 
     static async getById(gameId) {
-        const gameRef = doc(firestore, 'game', gameId);
-        const gameDoc = await getDoc(gameRef);
+        
+        const gameDoc = await getGameById(gameId);
 
-        if (gameDoc.exists()) {
+        if (gameDoc != null) {
             const gameData = gameDoc.data();
             const game = new Game(gameData.modeId, gameData.name);
             game.id = gameId;
@@ -51,8 +53,7 @@ class Game {
     }
 
     async save() {
-        const gameRef = doc(firestore, 'game', this.id);
-        await setDoc(gameRef, this.toJSON(), { merge: true });
+        await saveGameState(this.id);
     }
 
 }

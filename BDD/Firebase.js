@@ -15,6 +15,22 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
         }
     }
 
+    async function getgameById(gameid){
+        const gameRef = doc(firestore, 'game', gameId);
+        const gameDoc = await getDoc(gameRef);
+
+        if(gameDoc.exists()){
+            return gameDoc;
+        }else{
+            return null;
+        }
+    }
+
+    async function saveGameState(gameId){
+        const gameRef = doc(firestore, 'game', gameId);
+        await setDoc(gameRef, this.toJSON(), { merge: true });
+    }
+
 ///////////////////////////////PLAYER///////////////////////////////
     // Función para guardar un jugador en Firestore
     async function savePlayer(player) {
@@ -67,5 +83,5 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
     }
 
 
-export { saveGame, savePlayer, getPlayer, getAllGameMode };
+export { saveGame, savePlayer, getPlayer, getAllGameMode, getgameById, saveGameState };
 
