@@ -22,7 +22,7 @@ async function displayGameModes() {
         gameModeDiv.textContent = `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
          gameModeDiv.addEventListener('click', async () => {
             await createGame(gameMode.id);
-            window.location.href = '../index.html'; 
+            //window.location.href = '../index.html'; 
         });
         container.appendChild(gameModeDiv);
     });
