@@ -26,9 +26,9 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
         }
     }
 
-    async function saveGameState(gameId){
+    async function saveGameState(gameId, gameJSON){
         const gameRef = doc(firestore, 'game', gameId);
-        await setDoc(gameRef, this.toJSON(), { merge: true });
+        await setDoc(gameRef, gameJSON, { merge: true });
     }
 
 ///////////////////////////////PLAYER///////////////////////////////

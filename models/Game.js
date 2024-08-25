@@ -1,4 +1,4 @@
-import { getgameById, saveGameState} from '../BDD/Firebase.js';
+import { getGameById, saveGameState} from '../BDD/Firebase.js';
 
 class Game {
     // Constructor para inicializar el objeto
@@ -53,7 +53,7 @@ class Game {
     }
 
     async save() {
-        await saveGameState(this.id);
+        await saveGameState(this.id, this.toJSON());
     }
 
 }
