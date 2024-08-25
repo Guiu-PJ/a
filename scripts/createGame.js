@@ -20,8 +20,8 @@ async function displayGameModes() {
     gameModes.forEach(gameMode => {
         const gameModeDiv = document.createElement('div');
         gameModeDiv.textContent = `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
-         gameModeDiv.addEventListener('click', () => {
-            createGame(gameMode.id);
+         gameModeDiv.addEventListener('click', async () => {
+            await createGame(gameMode.id);
             window.location.href = '../index.html'; 
         });
         container.appendChild(gameModeDiv);
@@ -35,7 +35,7 @@ function createGame(gameModeId) {
     if (gameName) {
         // Crear una nueva instancia de Game con el nombre ingresado
         const newGame = new Game(gameModeId, gameName);
-        console.log('aaaaaaa = ', newGame)
+
         // Guardar nueva partida en Firestore
         saveGame(newGame)
             .then(() => {
