@@ -15,7 +15,7 @@ import { collection, doc, setDoc, getDoc, getDocs } from 'https://www.gstatic.co
         }
     }
 
-    async function getGameById(gameid){
+    async function getGameById(gameId){
         const gameRef = doc(firestore, 'game', gameId);
         const gameDoc = await getDoc(gameRef);
 
