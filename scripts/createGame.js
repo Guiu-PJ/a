@@ -28,7 +28,7 @@ async function displayGameModes() {
     });
 }
 
-function createGame(gameModeId) {
+async function createGame(gameModeId) {
 
     const gameName = prompt('Ingrese el nombre de la partida:');
     
