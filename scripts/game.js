@@ -1,12 +1,13 @@
+import { getGameById } from '../BDD/Firebase.js';
+
 async function displayPlayersInGame() {
     const gameId = sessionStorage.getItem('gameId');
     const playerName = sessionStorage.getItem('playerName');
     
     if (gameId) {
-        const gameRef = doc(firestore, 'game', gameId);
-        const gameDoc = await getDoc(gameRef);
+        const gameDoc = await getGameById(gameId);
 
-        if (gameDoc.exists()) {
+        if (gameDoc != null) {
             const gameData = gameDoc.data();
             const container = document.getElementById('a'); 
             container.innerHTML = ''; 
