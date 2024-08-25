@@ -24,3 +24,4 @@ async function displayPlayersInGame() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', displayPlayersInGame());
