@@ -28,32 +28,37 @@ function createUser() {
     }
 }
 
-async function joinGame(){
+async function joinGame() {
     const gameId = prompt('Ingrese el ID de la partida:');
 
     if (gameId) {
-        const game = await Game.getById(gameId);
-        if (game != null) {
-            const playerName = prompt('Ingrese su nombre para mostrar en el juego:');
-            if (playerName) {
-                // Almacenar gameId y playerName en sessionStorage
-                sessionStorage.setItem('gameId', gameId);
-                sessionStorage.setItem('playerName', playerName);
+        try {
+            const game = await Game.getById(gameId);
+            if (game != null) {
+                const playerName = prompt('Ingrese su nombre para mostrar en el juego:');
+                if (playerName) {
+                    // Almacenar gameId y playerName en sessionStorage
+                    sessionStorage.setItem('gameId', gameId);
+                    sessionStorage.setItem('playerName', playerName);
 
-                game.addPlayer(playerName);
-                await game.save();
+                    game.addPlayer(playerName);
+                    await game.save();
 
-                window.location.href = 'views/game.html';
+                    window.location.href = 'views/game.html';
+                } else {
+                    alert('El nombre no puede estar vacío.');
+                }
             } else {
-                alert('El nombre no puede estar vacío.');
+                alert('ID de la partida no válido. Inténtalo de nuevo.');
             }
-        } else {
-            alert('ID de la partida no válido. Inténtalo de nuevo.');
+        } catch (error) {
+            alert('Hubo un problema al unirse a la partida. Por favor, intenta de nuevo.');
+            console.error('Error al unirse a la partida:', error);
         }
     } else {
         alert('El ID de la partida no puede estar vacío.');
     }
-});
+}
 
 
 
