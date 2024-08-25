@@ -1,8 +1,9 @@
 import Player from '../models/Player.js';
+import Game from '../models/Game.js'
 import { savePlayer } from '../BDD/Firebase.js';
 
-
 document.getElementById('createUser').addEventListener('click', createUser);
+document.getElementById('joinGame').addEventListener('click', joinGame);
 
 // Función para manejar la creación del usuario
 function createUser() {
@@ -26,5 +27,38 @@ function createUser() {
         alert('El nombre del usuario no puede estar vacío.');
     }
 }
+
+async function joinGame(){
+    const gameId = prompt('Ingrese el ID de la partida:');
+
+    if (gameId) {
+        const game = await Game.getById(gameId);
+        if (game != null) {
+            const playerName = prompt('Ingrese su nombre para mostrar en el juego:');
+            if (playerName) {
+                // Almacenar gameId y playerName en sessionStorage
+                sessionStorage.setItem('gameId', gameId);
+                sessionStorage.setItem('playerName', playerName);
+
+                game.addPlayer(playerName);
+                await game.save();
+
+                window.location.href = 'views/game.html';
+            } else {
+                alert('El nombre no puede estar vacío.');
+            }
+        } else {
+            alert('ID de la partida no válido. Inténtalo de nuevo.');
+        }
+    } else {
+        alert('El ID de la partida no puede estar vacío.');
+    }
+});
+
+
+
+
+
+
 
 

@@ -31,6 +31,30 @@ class Game {
             status: this.status
         };
     }
+
+    static async getById(gameId) {
+        const gameRef = doc(firestore, 'game', gameId);
+        const gameDoc = await getDoc(gameRef);
+
+        if (gameDoc.exists()) {
+            const gameData = gameDoc.data();
+            const game = new Game(gameData.modeId, gameData.name);
+            game.id = gameId;
+            game.name = gameData.name;
+            game.players = gameData.players || {};
+            game.currentQuestionIndex = gameData.currentQuestionIndex;
+            game.status = gameData.status;
+            return game;
+        } else {
+            return null;
+        }
+    }
+
+    async save() {
+        const gameRef = doc(firestore, 'game', this.id);
+        await setDoc(gameRef, this.toJSON(), { merge: true });
+    }
+
 }
 
 export default Game;
