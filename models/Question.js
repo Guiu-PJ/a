@@ -1,11 +1,12 @@
-class Player {
+class Question {
     // Constructor para inicializar el objeto
-    constructor(name) {
+    constructor(question, modeId) {
         this.id = this.generateUniqueId();
-        this.name = name;
+        this.question = question;
+        this.modeId = modeId;
     }
 
-    // Método para generar un ID único para el jugador
+    // Método para generar un ID único para el juego
     generateUniqueId() {
         return '_' + Math.random().toString(36).substr(2, 9);
     }
@@ -14,9 +15,10 @@ class Player {
     toJSON() {
         return {
             id: this.id,
-            name: this.name
+            question: this.question,
+            modeId: this.modeId,
         };
     }
 }
 
-export default Player;
+export default Question;

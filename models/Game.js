@@ -19,6 +19,7 @@ class Game {
     // Método para agregar un jugador al juego
     addPlayer(playerName) {
         const playerId = this.generateUniqueId();
+        sessionStorage.setItem('playerId', playerId);
         this.players[playerId] = { name: playerName, score: 0 };
     }
 

@@ -40,9 +40,10 @@ async function joinGame() {
                     // Almacenar gameId y playerName en sessionStorage
                     sessionStorage.setItem('gameId', gameId);
                     sessionStorage.setItem('playerName', playerName);
-
+                    if (playerName != "admin") {
                     game.addPlayer(playerName);
                     await game.save();
+                    }   
 
                     window.location.href = 'views/game.html';
                 } else {
