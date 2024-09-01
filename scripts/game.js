@@ -60,7 +60,7 @@ async function startGame() {
         console.log("a " + preguntas);
         // Empezar el juego mostrando la primera pregunta si existe
         if (preguntas.length > 0) {
-            siguientePregunta(0);
+            nextQuestion(0);
         } else {
             alert('No hay preguntas disponibles para este modo de juego.');
         }
@@ -70,7 +70,7 @@ async function startGame() {
     }
 }
 
-function siguientePregunta(index) {
+function nextQuestion(index) {
     if (index >= 0 && index < preguntas.length) {
         const pregunta = preguntas[index];
         showQuestion(pregunta.question);
@@ -89,7 +89,12 @@ function setupSnapshotListener() {
 
                 if (newQuestionIndex !== currentQuestionIndex) {
                     currentQuestionIndex = newQuestionIndex;
-                    siguientePregunta(currentQuestionIndex);
+                    nextQuestion(currentQuestionIndex);
+                }
+
+                if (data.status === "waiting") {
+                    startGame();
+                    updateGameStatus("inGame");
                 }
             }
         });
@@ -105,6 +110,14 @@ async function handleNextQuestion() {
         });
     } else {
         console.log('No hay más preguntas o el índice actual es nulo.');
+    }
+}
+
+async function updateGameStatus(newStatus) {
+    if (gameRef) {
+        await updateDoc(gameRef, {
+            status: newStatus
+        });
     }
 }
 
