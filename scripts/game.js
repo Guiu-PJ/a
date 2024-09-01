@@ -5,6 +5,7 @@ let preguntas = [], currentQuestionIndex = null;
 const gameId = sessionStorage.getItem('gameId');
 let game, gameRef;
 const container = document.getElementById('a');
+let adminStartGame = false;
 
 document.addEventListener("DOMContentLoaded", async function () {
     game = await getGameById(gameId);
@@ -16,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const buttonStartGame = document.getElementById("startGame");
     if (buttonStartGame) {
-        buttonStartGame.addEventListener("click", startGame);
+        buttonStartGame.addEventListener("click", preparingGame);
     }
 
     const buttonNextQuestion = document.getElementById("nextQuestion");
@@ -24,6 +25,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         buttonNextQuestion.addEventListener("click", handleNextQuestion);
     }
 });
+
+async function preparingGame() {
+    adminStartGame = true;
+    if (gameRef) {
+        await updateDoc(gameRef, {
+            currentQuestionIndex: 0
+        });
+    }
+}
 
 async function displayPlayersInGame() {
     if (game != null) {
@@ -92,7 +102,7 @@ function setupSnapshotListener() {
                     nextQuestion(currentQuestionIndex);
                 }
 
-                if (data.status === "waiting") {
+                if (data.status === "waiting" && adminStartGame) {
                     startGame();
                     updateGameStatus("inGame");
                 }
