@@ -8,51 +8,65 @@ const container = document.getElementById('a');
 let adminStartGame = false;
 
 document.addEventListener("DOMContentLoaded", async function () {
-    game = await getGameById(gameId);
-    gameRef = await getGameRef(gameId);
-    if (game) {
-        displayPlayersInGame();
-        setupSnapshotListener();
-    }
+    try {
+        game = await getGameById(gameId);
+        gameRef = await getGameRef(gameId);
 
-    const buttonStartGame = document.getElementById("startGame");
-    if (buttonStartGame) {
-        buttonStartGame.addEventListener("click", preparingGame);
-    }
+        if (game) {
+            displayPlayersInGame();
+            setupSnapshotListener();
+        } else {
+            console.error('No se pudo obtener la partida.');
+        }
 
-    const buttonNextQuestion = document.getElementById("nextQuestion");
-    if (buttonNextQuestion) {
-        buttonNextQuestion.addEventListener("click", handleNextQuestion);
+        const buttonStartGame = document.getElementById("startGame");
+        if (buttonStartGame) {
+            buttonStartGame.addEventListener("click", () => updateGameStatus("inGame"));
+        }
+
+        const buttonNextQuestion = document.getElementById("nextQuestion");
+        if (buttonNextQuestion) {
+            buttonNextQuestion.addEventListener("click",handleNextQuestion);
+        }
+    } catch (error) {
+        console.error('Error en la inicialización:', error);
     }
 });
 
 async function preparingGame() {
-    adminStartGame = true;
-    if (gameRef) {
-        await updateDoc(gameRef, {
-            currentQuestionIndex: 0
-        });
+    try {
+        adminStartGame = true;
+        console.log("Preparando el juego, adminStartGame:", adminStartGame);
+        if (gameRef) {
+            await updateDoc(gameRef, { status: "inGame" });
+        }
+    } catch (error) {
+        console.error('Error preparando el juego:', error);
     }
 }
 
 async function displayPlayersInGame() {
-    if (game != null) {
-        const gameDoc = game;
-        if (gameDoc.exists()) {
-            const gameData = gameDoc.data();
-            container.innerHTML = '';
-            sessionStorage.setItem('modeId', gameData.modeId);
+    try {
+        if (game != null) {
+            const gameDoc = game;
+            if (gameDoc.exists()) {
+                const gameData = gameDoc.data();
+                container.innerHTML = '';
+                sessionStorage.setItem('modeId', gameData.modeId);
 
-            for (const playerId in gameData.players) {
-                const playerDiv = document.createElement('div');
-                playerDiv.textContent = `Jugador: ${gameData.players[playerId].name}`;
-                container.appendChild(playerDiv);
+                for (const playerId in gameData.players) {
+                    const playerDiv = document.createElement('div');
+                    playerDiv.textContent = `Jugador: ${gameData.players[playerId].name}`;
+                    container.appendChild(playerDiv);
+                }
+            } else {
+                alert('No se encontró la partida.');
             }
         } else {
-            alert('No se encontró la partida.');
+            alert('ID de partida no proporcionado.');
         }
-    } else {
-        alert('ID de partida no proporcionado.');
+    } catch (error) {
+        console.error('Error mostrando los jugadores:', error);
     }
 }
 
@@ -63,20 +77,23 @@ if (sessionStorage.getItem('playerName') === "admin") {
 }
 
 async function startGame() {
-    const modeId = sessionStorage.getItem('modeId');
+    try {
+        const modeId = sessionStorage.getItem('modeId');
 
-    if (modeId) {
-        preguntas = await getQuestionsByGameMode(modeId);
-        console.log("a " + preguntas);
-        // Empezar el juego mostrando la primera pregunta si existe
-        if (preguntas.length > 0) {
-            nextQuestion(0);
+        if (modeId) {
+            preguntas = await getQuestionsByGameMode(modeId);
+            console.log("Preguntas: ", preguntas);
+            // Empezar el juego mostrando la primera pregunta si existe
+            if (preguntas.length > 0) {
+                nextQuestion(0);
+            } else {
+                alert('No hay preguntas disponibles para este modo de juego.');
+            }
         } else {
-            alert('No hay preguntas disponibles para este modo de juego.');
+            alert('ID de partida no proporcionado.');
         }
-    } else {
-        alert('ID de partida no proporcionado.');
-        return null;
+    } catch (error) {
+        console.error('Error iniciando el juego:', error);
     }
 }
 
@@ -91,43 +108,59 @@ function nextQuestion(index) {
 }
 
 function setupSnapshotListener() {
+    console.log("Configurando el listener de snapshots.");
     if (gameRef) {
-        onSnapshot(gameRef, (snapshot) => {
+        onSnapshot(gameRef, async (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.data();
                 const newQuestionIndex = data.currentQuestionIndex;
+                const newGameStatus = data.status;
+
+                console.log("Snapshot recibido. newQuestionIndex:", newQuestionIndex, "currentQuestionIndex:", currentQuestionIndex);
+
+                if (newGameStatus !== game.status) {
+                    game.status = newGameStatus;
+                    console.log("Estado del juego actualizado:", newGameStatus);
+
+                    if (newGameStatus === "inGame") {
+                        console.log("El juego ha comenzado.");
+                        await startGame();
+                    }
+                }
 
                 if (newQuestionIndex !== currentQuestionIndex) {
-                    currentQuestionIndex = newQuestionIndex;
+                    currentQuestionIndex = newQuestionIndex
                     nextQuestion(currentQuestionIndex);
                 }
-
-                if (data.status === "waiting" && adminStartGame) {
-                    startGame();
-                    updateGameStatus("inGame");
-                }
             }
+        }, (error) => {
+            console.error('Error en el snapshot listener:', error);
         });
     }
 }
 
 async function handleNextQuestion() {
-    if (currentQuestionIndex !== null && currentQuestionIndex < preguntas.length - 1) {
-        const newIndex = currentQuestionIndex + 1;
-
-        await updateDoc(gameRef, {
-            currentQuestionIndex: newIndex
-        });
-    } else {
-        console.log('No hay más preguntas o el índice actual es nulo.');
+    
+    try {
+        if (currentQuestionIndex !== null && currentQuestionIndex < preguntas.length - 1) {
+            const newIndex = currentQuestionIndex + 1;
+            await updateDoc(gameRef, { currentQuestionIndex: newIndex });
+        } else {
+            console.log('No hay más preguntas o el índice actual es nulo.');
+        }
+    } catch (error) {
+        console.error('Error manejando la siguiente pregunta:', error);
     }
+    
 }
 
 async function updateGameStatus(newStatus) {
-    if (gameRef) {
-        await updateDoc(gameRef, {
-            status: newStatus
-        });
+    try {
+        if (gameRef) {
+            await updateDoc(gameRef, { status: newStatus });
+        }
+    } catch (error) {
+        console.error('Error actualizando el estado del juego:', error);
     }
 }
 
