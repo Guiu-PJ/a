@@ -20,11 +20,26 @@ class Game {
     addPlayer(playerName) {
         const playerId = this.generateUniqueId();
         sessionStorage.setItem('playerId', playerId);
-        this.players[playerId] = { name: playerName, score: 0 };
+        this.players[playerId] = { name: playerName};
+    }
+
+    // Método para eliminar un jugador al juego
+    removePlayer(playerName) {
+        const playerId = Object.keys(this.players).find(id => this.players[id].name === playerName);
+        console.log(playerId);
+        // Si se encuentra el jugador, eliminarlo
+        if (playerId) {
+            delete this.players[playerId];  // Eliminar el jugador del objeto players
+            console.log(`Jugador ${playerName} eliminado.`);
+        } else {
+            console.log(`Jugador ${playerName} no encontrado.`);
+        }
+        
     }
 
     // Método para convertir la instancia en un objeto JSON
     toJSON() {
+        console.log(this.players);
         return {
             id: this.id,
             players: this.players,
@@ -53,8 +68,8 @@ class Game {
         }
     }
 
-    async save() {
-        await saveGameState(this.id, this.toJSON());
+    async save(merge) {
+        await saveGameState(this.id, this.toJSON(), merge);
     }
 
 }

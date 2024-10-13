@@ -42,7 +42,7 @@ async function joinGame() {
                     sessionStorage.setItem('playerName', playerName);
                     if (playerName != "admin") {
                     game.addPlayer(playerName);
-                    await game.save();
+                    await game.save(true);
                     }   
 
                     window.location.href = 'views/game.html';

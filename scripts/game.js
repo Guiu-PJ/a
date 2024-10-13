@@ -1,15 +1,17 @@
-import { getGameById, getQuestionsByGameMode, getGameRef } from '../BDD/Firebase.js';
+import { getGameById, getQuestionsByGameMode, getGameRef, saveAnswer } from '../BDD/Firebase.js';
+import Game from '../models/Game.js';
 import { onSnapshot, updateDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+import Answer from '../models/Answer.js'
 
-let preguntas = [], currentQuestionIndex = null;
+let questions = [], currentQuestionIndex = null;
 const gameId = sessionStorage.getItem('gameId');
-let game, gameRef;
+let game, gameDoc, gameRef, resp = 0, numPlayers = 0;
 const container = document.getElementById('a');
-let adminStartGame = false;
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
-        game = await getGameById(gameId);
+        game = await Game.getById(gameId);
+        gameDoc = await getGameById(gameId);
         gameRef = await getGameRef(gameId);
 
         if (game) {
@@ -33,30 +35,32 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
-async function preparingGame() {
-    try {
-        adminStartGame = true;
-        console.log("Preparando el juego, adminStartGame:", adminStartGame);
-        if (gameRef) {
-            await updateDoc(gameRef, { status: "inGame" });
-        }
-    } catch (error) {
-        console.error('Error preparando el juego:', error);
-    }
-}
-
 async function displayPlayersInGame() {
     try {
-        if (game != null) {
-            const gameDoc = game;
+        if (gameDoc != null) {
             if (gameDoc.exists()) {
                 const gameData = gameDoc.data();
                 container.innerHTML = '';
                 sessionStorage.setItem('modeId', gameData.modeId);
-
+                numPlayers = Object.keys(gameData.players).length;
+                console.log(gameData.players);
                 for (const playerId in gameData.players) {
                     const playerDiv = document.createElement('div');
                     playerDiv.textContent = `Jugador: ${gameData.players[playerId].name}`;
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Borrar';
+
+                    deleteButton.addEventListener('click', async () => {
+                        console.log(`Botón del jugador ${gameData.players[playerId].name} presionado`);
+                        console.log(game);
+                        game.removePlayer(gameData.players[playerId].name);
+                        console.log(game);
+                        await game.save(false);
+                    });
+
+                    playerDiv.appendChild(deleteButton);
+
                     container.appendChild(playerDiv);
                 }
             } else {
@@ -81,10 +85,10 @@ async function startGame() {
         const modeId = sessionStorage.getItem('modeId');
 
         if (modeId) {
-            preguntas = await getQuestionsByGameMode(modeId);
-            console.log("Preguntas: ", preguntas);
+            questions = await getQuestionsByGameMode(modeId);
+            console.log("Preguntas: ", questions);
             // Empezar el juego mostrando la primera pregunta si existe
-            if (preguntas.length > 0) {
+            if (questions.length > 0) {
                 nextQuestion(0);
             } else {
                 alert('No hay preguntas disponibles para este modo de juego.');
@@ -98,10 +102,10 @@ async function startGame() {
 }
 
 function nextQuestion(index) {
-    if (index >= 0 && index < preguntas.length) {
-        const pregunta = preguntas[index];
-        showQuestion(pregunta.question);
-        console.log("Mostrando pregunta: " + pregunta.question);
+    if (index >= 0 && index < questions.length) {
+        const question = questions[index];
+        showQuestion(question);
+        console.log("Mostrando pregunta: " + question.question);
     } else {
         console.log('No hay más preguntas.');
     }
@@ -127,10 +131,17 @@ function setupSnapshotListener() {
                         await startGame();
                     }
                 }
+                console.log("jugadores: " + Object.keys(data.players).length + " -> " + numPlayers);
+                if (Object.keys(data.players).length != numPlayers) {
+                    console.log("actualizar jugadores");
+                    await reloadGameDoc();
+                    displayPlayersInGame();
+                }
 
                 if (newQuestionIndex !== currentQuestionIndex) {
                     currentQuestionIndex = newQuestionIndex
                     nextQuestion(currentQuestionIndex);
+                    resp = 0;
                 }
             }
         }, (error) => {
@@ -142,7 +153,7 @@ function setupSnapshotListener() {
 async function handleNextQuestion() {
     
     try {
-        if (currentQuestionIndex !== null && currentQuestionIndex < preguntas.length - 1) {
+        if (currentQuestionIndex !== null && currentQuestionIndex < questions.length - 1) {
             const newIndex = currentQuestionIndex + 1;
             await updateDoc(gameRef, { currentQuestionIndex: newIndex });
         } else {
@@ -164,9 +175,42 @@ async function updateGameStatus(newStatus) {
     }
 }
 
-function showQuestion(question) {
+async function showQuestion(question) {
     container.innerHTML = '';
     const questionDiv = document.createElement('div');
-    questionDiv.textContent = "Pregunta: " + question;
+    questionDiv.textContent = "Pregunta: " + question.question;
     container.appendChild(questionDiv);
+    if (game != null) {
+        const gameData = game;
+        for (const playerId in gameData.players) {
+            const playerButton = document.createElement('button');
+            playerButton.textContent = gameData.players[playerId].name;
+
+            playerButton.addEventListener('click', () => handlePlayerButtonClick(gameData.players[playerId], question));
+
+            container.appendChild(playerButton);
+        }
+        }
+    }
+
+async function handlePlayerButtonClick(player, question) {
+    if (resp == 0) {
+        console.log("Jugador seleccionado: " + player.name);
+        let playerId = sessionStorage.getItem('playerId') || "admin";
+        resp = 1;
+        const answer = new Answer(playerId, gameDoc.id, question.id, player.name);
+        saveAnswer(answer)
+        .then(() => {
+            alert('¡Answer creada y guardada con éxito!');
+        })
+            .catch(error => {
+                console.error('Error al guardar la pregunta:', error);
+                alert('Error al crear la pregunta.');
+            });
+    }
+
+}
+
+async function reloadGameDoc() {
+    gameDoc = await getGameById(gameId);
 }

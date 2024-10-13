@@ -27,9 +27,12 @@ import GameMode from '../models/GameMode.js';
         }
     }
 
-    async function saveGameState(gameId, gameJSON){
-        const gameRef = doc(firestore, 'game', gameId);
-        await setDoc(gameRef, gameJSON, { merge: true });
+async function saveGameState(gameId, gameJSON, merge) {
+    console.log("aaaaaa");
+    console.log(gameJSON);
+    const gameRef = doc(firestore, 'game', gameId);
+    await setDoc(gameRef, gameJSON, { merge: merge });
+    console.log("bbbbbbb");
     }
 
     function getGameRef(gameId) {
@@ -164,7 +167,19 @@ async function getGameModeById(modeId) {
         }
     }
 
+///////////////////////////////Answer///////////////////////////////
+    async function saveAnswer(answer) {
+        const answerData = answer.toJSON(); // Convierte la instancia del juego en un objeto JSON
+        const answerRef = doc(firestore, 'answer', answer.id); // Crea una referencia a la colección 'answer' y el documento con el id
+
+        try {
+            await setDoc(answerRef, answerData); // Guarda el objeto JSON en Firestore
+            console.log('Respuesta guardada con éxito!');
+        } catch (error) {
+            console.error('Error al guardar la respuesta:', error);
+        }
+    }
 
 
-export { saveGame, savePlayer, getPlayer, getAllGameMode, getGameById, getGameRef, saveGameState, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState };
+export { saveGame, savePlayer, getPlayer, getAllGameMode, getGameById, getGameRef, saveGameState, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer };
 
