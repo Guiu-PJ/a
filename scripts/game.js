@@ -131,6 +131,7 @@ function setupSnapshotListener() {
                         await startGame();
                     }
                 }
+
                 console.log("jugadores: " + Object.keys(data.players).length + " -> " + numPlayers);
                 if (Object.keys(data.players).length != numPlayers) {
                     console.log("actualizar jugadores");
