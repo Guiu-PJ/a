@@ -168,7 +168,7 @@ async function getGameModeById(modeId) {
     }
 
 ///////////////////////////////Answer///////////////////////////////
-    async function saveAnswer(answer) {
+async function saveAnswer(answer) {
         const answerData = answer.toJSON(); // Convierte la instancia del juego en un objeto JSON
         const answerRef = doc(firestore, 'answer', answer.id); // Crea una referencia a la colección 'answer' y el documento con el id
 
@@ -178,8 +178,18 @@ async function getGameModeById(modeId) {
         } catch (error) {
             console.error('Error al guardar la respuesta:', error);
         }
+}
+
+    async function answerGameIdAndQuestionIdFirebase(gameId, questionId) {
+        try {
+            const answersRef = collection(firestore, 'answer');  // Referencia a la colección "answers"
+            const q = query(answersRef, where("gameId", "==", gameId), where("questionId", "==", questionId));
+            return getDocs(q);
+        } catch (error) {
+            console.error('Error al realizar la consulta de answer:', error);
+        }
     }
 
 
-export { saveGame, savePlayer, getPlayer, getAllGameMode, getGameById, getGameRef, saveGameState, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer };
+export { saveGame, savePlayer, getPlayer, getAllGameMode, getGameById, getGameRef, saveGameState, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer, answerGameIdAndQuestionIdFirebase };
 
