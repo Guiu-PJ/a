@@ -1,0 +1,12 @@
+#divRespuestas {
+    display: none; /* Oculto inicialmente */
+    position: fixed; /* Fijo en la pantalla, incluso al hacer scroll */
+    top: 50%; /* Posicionado en el centro vertical */
+    left: 50%; /* Posicionado en el centro horizontal */
+    transform: translate(-50%, -50%); /* Ajuste para centrarlo correctamente */
+    background-color: white; /* Color de fondo para que sea visible */
+    border: 1px solid black; /* Borde negro alrededor del div */
+    padding: 20px; /* Espacio interno */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle un aspecto flotante */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
