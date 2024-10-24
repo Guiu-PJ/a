@@ -9,6 +9,7 @@ class Game {
         this.name = name;
         this.modeId = modeId;
         this.status = "waiting";
+        this.cont = 0;
     }
 
     // Método para generar un ID único para el juego
@@ -46,7 +47,8 @@ class Game {
             currentQuestionIndex: this.currentQuestionIndex,
             modeId: this.modeId,
             name: this.name,
-            status: this.status
+            status: this.status,
+            cont: this.cont
         };
     }
 
@@ -62,6 +64,7 @@ class Game {
             game.players = gameData.players || {};
             game.currentQuestionIndex = gameData.currentQuestionIndex;
             game.status = gameData.status;
+            game.cont = gameData.cont;
             return game;
         } else {
             return null;
