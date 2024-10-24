@@ -8,6 +8,7 @@ const gameId = sessionStorage.getItem('gameId');
 let game, gameDoc, gameRef, resp = 0, numPlayers = 0;
 const container = document.getElementById('a');
 const containerAnswers = document.getElementById('divRespuestas');
+const txtCountAnswers = document.getElementById("countAnswers");
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
@@ -129,7 +130,7 @@ async function showAnswers() {
     containerAnswers.innerHTML = '';
     if ((sessionStorage.getItem('playerName') === "admin")) {
         const answerButton = document.createElement('button');
-        answerButton.textContent = "Borrar";
+        answerButton.textContent = "Cerrar";
         answerButton.addEventListener('click', () => {
             document.getElementById('divRespuestas').style.display = 'none';
         });
@@ -146,7 +147,7 @@ async function showAnswers() {
         }
     });
 
-    // Luego mostramos las respuestas con su respectivo contador
+    // Mostramos las respuestas con su respectivo contador
     for (const [answerText, count] of Object.entries(answerCount)) {
         const answerDiv = document.createElement('div');
         if (count > 1) {
@@ -168,6 +169,7 @@ function setupSnapshotListener() {
                 const data = snapshot.data();
                 const newQuestionIndex = data.currentQuestionIndex;
                 const newGameStatus = data.status;
+                //await reloadGame();
 
                 console.log("Snapshot recibido. newQuestionIndex:", newQuestionIndex, "currentQuestionIndex:", currentQuestionIndex);
 
@@ -176,7 +178,7 @@ function setupSnapshotListener() {
                     console.log("Estado del juego actualizado:", newGameStatus);
 
                     if (newGameStatus === "inGame") {
-                        await reloadGameDoc();
+                        await reloadGame();
                         console.log("El juego ha comenzado.");
                         await startGame();
                     }
@@ -185,7 +187,7 @@ function setupSnapshotListener() {
                 console.log("jugadores: " + Object.keys(data.players).length + " -> " + numPlayers);
                 if (Object.keys(data.players).length != numPlayers) {
                     console.log("actualizar jugadores");
-                    await reloadGameDoc();
+                    await reloadGame();
                     displayPlayersInGame();
                 }
 
@@ -194,6 +196,13 @@ function setupSnapshotListener() {
                     nextQuestion(currentQuestionIndex);
                     resp = 0;
                 }
+
+                if (game.status == "inGame") {
+                    await reloadGame();
+                    txtCountAnswers.textContent = game.cont + "/" + Object.keys(data.players).length + (resp == 1 ? " -- Has respondido" : "");
+                }
+                
+
             }
         }, (error) => {
             console.error('Error en el snapshot listener:', error);
@@ -206,7 +215,7 @@ async function handleNextQuestion() {
     try {
         if (currentQuestionIndex !== null && currentQuestionIndex < questions.length - 1) {
             const newIndex = currentQuestionIndex + 1;
-            await updateDoc(gameRef, { currentQuestionIndex: newIndex });
+            await updateDoc(gameRef, { currentQuestionIndex: newIndex, cont: 0 });
         } else {
             console.log('No hay más preguntas o el índice actual es nulo.');
         }
@@ -241,14 +250,17 @@ async function showQuestion(question) {
 
             container.appendChild(playerButton);
         }
-        }
     }
+}
 
 async function handlePlayerButtonClick(player, question) {
     if (resp == 0) {
+        await reloadGame();
         console.log("Jugador seleccionado: " + player.name);
         let playerId = sessionStorage.getItem('playerId') || "admin";
         resp = 1;
+        game.cont = game.cont + 1;
+       await  game.save(true);
         const answer = new Answer(playerId, gameDoc.id, question.id, question.question, player.name);
         saveAnswer(answer)
         .then(() => {
@@ -262,7 +274,7 @@ async function handlePlayerButtonClick(player, question) {
 
 }
 
-async function reloadGameDoc() {
+async function reloadGame() {
     //gameDoc = await getGameById(gameId);
     game = await Game.getById(gameId);
 }
