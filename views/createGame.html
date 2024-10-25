@@ -4,18 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear partida</title>
-    
+    <link rel="stylesheet" href="../css/Styles.css">
 </head>
 <body>
     <div id="crearPartida">
         <h1>�aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!</h1>
-        
-        <button id="createGame">Crear</button>
+
+        <button id="createGameMode">Crear</button>
 
         <div id="a"> </div>
 
+        <div id="divCreateGameMode">
+
+            <h5 class="modal-title">Configura tu Game Mode</h5>
+
+            <form id="gameModeForm">
+                <div class="form-group">
+                    <label for="nameInput">Nombre:</label>
+                    <input type="text" id="nameInput" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="spinnerSelect">Modo de juego:</label>
+                    <select id="spinnerSelect" class="form-control" required>
+                    </select>
+                </div>
+            </form>
+            <button type="button" class="btn btn-primary" id="submitGameMode">Crear gameMode</button>
+        </div>
+
     </div>
-    <script type="module" src="../scripts/app.js"></script>
+    <!--<script type="module" src="../scripts/app.js"></script>-->
     <script type="module" src="../scripts/createGame.js"></script>
 </body>
 </html>

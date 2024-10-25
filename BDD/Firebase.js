@@ -88,9 +88,8 @@ async function saveGameState(gameId, gameJSON, merge) {
             console.error('Error al obtener los datos de los gamemode:', error);
             return null;
         }
-}
-
-async function getGameModeById(modeId) {
+    }
+    async function getGameModeById(modeId) {
     console.log(modeId);
         const modeRef = doc(firestore, 'gameMode', modeId);
         const modeDoc = await getDoc(modeRef);

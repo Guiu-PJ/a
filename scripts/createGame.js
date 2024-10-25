@@ -1,11 +1,21 @@
 import { getAllGameMode, saveGame } from '../BDD/Firebase.js';
 import Game from '../models/Game.js'
 
-//const text = document.getElementById('a').addEventListener('click', createGame);
 
-//text = getAllGameMode();
+const divCreateGameMode = document.getElementById('divCreateGameMode');
+const spinnerCreateGameMode = document.getElementById('divCreateGameMode');
+document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            displayGameModes();
 
-
+            const buttonCreateGameMode = document.getElementById("createGameMode");
+            if (buttonCreateGameMode) {
+                buttonCreateGameMode.addEventListener("click", showDivCreateGameMode);
+            }
+        } catch (error) {
+            console.error('Error en la inicialización:', error);
+        }
+});
 
 async function displayGameModes() {
     const gameModes = await getAllGameMode(); // Esperar a que se resuelvan los datos
@@ -26,6 +36,10 @@ async function displayGameModes() {
         });
         container.appendChild(gameModeDiv);
     });
+    }
+
+function showDivCreateGameMode() {
+    divCreateGameMode.style.display = 'block';
 }
 
 async function createGame(gameModeId) {
@@ -50,6 +64,26 @@ async function createGame(gameModeId) {
     }
 }
 
+async function createGameMode(gameModeType) {
 
-// Llamar a la función para obtener y mostrar los jugadores cuando se cargue la página
-document.addEventListener('DOMContentLoaded', displayGameModes());
+    const gameName = prompt('Ingrese el nombre de la partida:');
+
+    if (gameName) {
+        // Crear una nueva instancia de Game con el nombre ingresado
+        const newGame = new Game(gameModeId, gameName);
+
+        // Guardar nueva partida en Firestore
+        saveGame(newGame)
+            .then(() => {
+                alert('¡Game creado y guardado con éxito!');
+            })
+            .catch(error => {
+                console.error('Error al guardar la partida:', error);
+                alert('Error al crear la partida.');
+            });
+    } else {
+        alert('El nombre de la partida no puede estar vacío.');
+    }
+}
+
+
