@@ -27,14 +27,31 @@ import GameMode from '../models/GameMode.js';
         }
     }
 
-async function saveGameState(gameId, gameJSON, merge) {
-    console.log(gameJSON);
-    const gameRef = doc(firestore, 'game', gameId);
-    await setDoc(gameRef, gameJSON, { merge: merge });
+    async function saveGameState(gameId, gameJSON, merge) {
+        console.log(gameJSON);
+        const gameRef = doc(firestore, 'game', gameId);
+        await setDoc(gameRef, gameJSON, { merge: merge });
     }
 
     function getGameRef(gameId) {
         return doc(firestore, 'game', gameId);
+    }
+
+    async function getAllGames() {
+        const gameRef = collection(firestore, 'game'); // Referencia a la colección
+        try {
+            const querySnapshot = await getDocs(gameRef);
+            const games = [];
+            querySnapshot.forEach((doc) => {
+                const data = doc.data()
+                games.push({ id: doc.id, name: data.name, mode: data.mode })
+            });
+            console.log('Datos de los games: ', games);
+            return games;
+        } catch (error) {
+            console.error('Error al obtener los datos de los games:', error);
+            return null;
+        }
     }
 
 ///////////////////////////////PLAYER///////////////////////////////
@@ -201,5 +218,5 @@ async function saveAnswer(answer) {
     }
 
 
-export { saveGame, savePlayer, getPlayer, saveGamemode, getAllGameMode, getGameById, getGameRef, saveGameState, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer, answerGameIdAndQuestionIdFirebase };
+export { saveGame, savePlayer, getPlayer, saveGamemode, getAllGameMode, getGameById, getGameRef, saveGameState, getAllGames, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer, answerGameIdAndQuestionIdFirebase };
 
