@@ -38,13 +38,13 @@ async function displayGameModes() {
     gameModes.forEach(gameMode => {
         const gameModeDiv = document.createElement('div');
         gameModeDiv.textContent = `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
-         gameModeDiv.addEventListener('click', async () => {
+            gameModeDiv.addEventListener('click', async () => {
             await createGame(gameMode.id);
             //window.location.href = '../index.html'; 
         });
         container.appendChild(gameModeDiv);
     });
-    }
+}
 
 function showDivCreateGameMode() {
     spinnerCreateGameMode.innerHTML = "";
