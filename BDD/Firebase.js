@@ -28,11 +28,9 @@ import GameMode from '../models/GameMode.js';
     }
 
 async function saveGameState(gameId, gameJSON, merge) {
-    console.log("aaaaaa");
     console.log(gameJSON);
     const gameRef = doc(firestore, 'game', gameId);
     await setDoc(gameRef, gameJSON, { merge: merge });
-    console.log("bbbbbbb");
     }
 
     function getGameRef(gameId) {
@@ -72,7 +70,20 @@ async function saveGameState(gameId, gameJSON, merge) {
     }
 
     ///////////////////////////////GameMode///////////////////////////////
+
+    async function saveGamemode(gameMode) {
+        const gameModeData = gameMode.toJSON(); // Convierte la instancia del juego en un objeto JSON
+        const gameModeRef = doc(firestore, 'gameMode', gameMode.id); // Crea una referencia a la colección 'gameMode' y el documento con el gameModeId
+
+        try {
+            await setDoc(gameModeRef, gameModeData); // Guarda el objeto JSON en Firestore
+            console.log('Modo de juego guardado con éxito!');
+        } catch (error) {
+            console.error('Error al guardar el modo de juego:', error);
+        }
+    }
     // Función para recuperar todos los gameMode desde Firestore
+
     async function getAllGameMode() {
         const gameModeRef = collection(firestore, 'gameMode'); // Referencia a la colección
         try {
@@ -190,5 +201,5 @@ async function saveAnswer(answer) {
     }
 
 
-export { saveGame, savePlayer, getPlayer, getAllGameMode, getGameById, getGameRef, saveGameState, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer, answerGameIdAndQuestionIdFirebase };
+export { saveGame, savePlayer, getPlayer, saveGamemode, getAllGameMode, getGameById, getGameRef, saveGameState, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer, answerGameIdAndQuestionIdFirebase };
 
