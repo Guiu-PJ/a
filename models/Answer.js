@@ -1,4 +1,4 @@
-import { answerGameIdAndQuestionIdFirebase } from '../BDD/Firebase.js';
+import { answerGameIdAndQuestionIdFirebase, answerGameIdFirebase } from '../BDD/Firebase.js';
 
 class Answer{
     constructor(playerId, gameId, questionId, questionTxt, answer) {
@@ -30,6 +30,20 @@ class Answer{
     static async getByGameAndQuestion(gameId, questionId) {
         try {
             const querySnapshot = await answerGameIdAndQuestionIdFirebase(gameId, questionId);
+            const results = [];
+            querySnapshot.forEach((doc) => {
+                results.push(doc.data());  // Recoger los datos de cada documento y añadirlos al array
+            });
+            return results;  // Devolver los resultados como un array
+        } catch (error) {
+            console.error("Error fetching documents: ", error);
+            return [];
+        }
+    }
+
+    static async getByGame(gameId) {
+        try {
+            const querySnapshot = await answerGameIdFirebase(gameId);
             const results = [];
             querySnapshot.forEach((doc) => {
                 results.push(doc.data());  // Recoger los datos de cada documento y añadirlos al array
