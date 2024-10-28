@@ -195,7 +195,7 @@ import GameMode from '../models/GameMode.js';
     }
 
 ///////////////////////////////Answer///////////////////////////////
-async function saveAnswer(answer) {
+    async function saveAnswer(answer) {
         const answerData = answer.toJSON(); // Convierte la instancia del juego en un objeto JSON
         const answerRef = doc(firestore, 'answer', answer.id); // Crea una referencia a la colección 'answer' y el documento con el id
 
@@ -205,7 +205,7 @@ async function saveAnswer(answer) {
         } catch (error) {
             console.error('Error al guardar la respuesta:', error);
         }
-}
+    }
 
     async function answerGameIdAndQuestionIdFirebase(gameId, questionId) {
         try {
@@ -217,6 +217,16 @@ async function saveAnswer(answer) {
         }
     }
 
+    async function answerGameIdFirebase(gameId) {
+        try {
+            const answersRef = collection(firestore, 'answer');  // Referencia a la colección "answers"
+            const q = query(answersRef, where("gameId", "==", gameId));
+            return getDocs(q);
+        } catch (error) {
+            console.error('Error al realizar la consulta de answer:', error);
+        }
+    }
 
-export { saveGame, savePlayer, getPlayer, saveGamemode, getAllGameMode, getGameById, getGameRef, saveGameState, getAllGames, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer, answerGameIdAndQuestionIdFirebase };
+
+export { saveGame, savePlayer, getPlayer, saveGamemode, getAllGameMode, getGameById, getGameRef, saveGameState, getAllGames, saveQuestion, getQuestionsByGameMode, getGameModeById, saveGameModeState, saveAnswer, answerGameIdAndQuestionIdFirebase, answerGameIdFirebase };
 
