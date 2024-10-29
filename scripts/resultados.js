@@ -4,7 +4,7 @@ import Answer from '../models/Answer.js'
 
 const divGames = document.getElementById('games');
 const containerAnswers = document.getElementById('divRespuestas');
-let answers = [];
+let answers = [], questionsIds = [];
 let count = 0;
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -42,8 +42,10 @@ async function displayGames() {
 async function showAllAnswers(gameId) {
     showDivAnswers();
     answers = await Answer.getByGame(gameId);
-    showAnswers(count);
+    questionsIds = [...new Set(answers.map(answer => answer.questionId))];
+    console.log(questionsIds);
     console.log(answers);
+    showAnswers(count);
 }
 
 
@@ -56,23 +58,24 @@ function showDivAnswers() {
         document.getElementById('divRespuestas').style.display = 'none';
     });
     containerAnswers.appendChild(answerButton);
-
+    /**
     nextAnswerButton.addEventListener('click', () => {
     });
     containerAnswers.appendChild(nextAnswerButton);
 
     preAnswerButton.addEventListener('click', () => {
     });
-    containerAnswers.appendChild(preAnswerButton);
+    containerAnswers.appendChild(preAnswerButton); */
     
 }
 
 
 async function showAnswers(count) {
+    const filtredAnswersbyQuestionId = getAnswersByQuestionId(count);
     let answerCount = {}; // Objeto para contar las respuestas
 
     // Primero contamos cuántas veces aparece cada respuesta
-    answers.forEach((answer) => {
+    filtredAnswersbyQuestionId.forEach((answer) => {
         if (answer.answer) {
             if (answerCount[answer.answer]) {
                 answerCount[answer.answer]++;
@@ -81,6 +84,10 @@ async function showAnswers(count) {
             }
         }
     });
+
+    const questionDiv = document.createElement('div');
+    questionDiv.textContent = `Pregunta: ${answers[0].questionTxt}`;
+    containerAnswers.appendChild(questionDiv);
 
     // Mostramos las respuestas con su respectivo contador
     for (const [answerText, count] of Object.entries(answerCount)) {
@@ -94,3 +101,16 @@ async function showAnswers(count) {
         containerAnswers.appendChild(answerDiv);
     }
 }
+
+function getAnswersByQuestionId(count) {
+    if (count >= 0 && count < questionsIds.length) {
+        const questionId = questionsIds[count]; 
+
+        return answers.filter(respuesta => respuesta.questionId === questionId);;
+    } else {
+        console.error("Indice fuera de rango.");
+        return [];
+    }
+}
+
+
