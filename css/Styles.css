@@ -11,3 +11,11 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle un aspecto flotante */
     z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
+
+
+.miniTitle {
+    font-size: 2em; 
+    font-weight: bold; 
+    margin: 0.67em 0; 
+    color: #333;
+}
