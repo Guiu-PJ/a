@@ -52,21 +52,28 @@ async function showAllAnswers(gameId) {
 function showDivAnswers() {
     containerAnswers.style.display = 'block';
     containerAnswers.innerHTML = '';
+
+    const preAnswerButton = document.createElement('button');
+    preAnswerButton.textContent = "Anterior";
+    preAnswerButton.addEventListener('click', () => {
+        preAnswers();
+    });
+    containerAnswers.appendChild(preAnswerButton);
+
     const answerButton = document.createElement('button');
     answerButton.textContent = "Cerrar";
     answerButton.addEventListener('click', () => {
         document.getElementById('divRespuestas').style.display = 'none';
+        count = 0;
     });
     containerAnswers.appendChild(answerButton);
-    /**
+
+    const nextAnswerButton = document.createElement('button');
+    nextAnswerButton.textContent = "Siguiente";
     nextAnswerButton.addEventListener('click', () => {
+        nextAnswers();
     });
     containerAnswers.appendChild(nextAnswerButton);
-
-    preAnswerButton.addEventListener('click', () => {
-    });
-    containerAnswers.appendChild(preAnswerButton); */
-    
 }
 
 
@@ -87,6 +94,7 @@ async function showAnswers(count) {
 
     const questionDiv = document.createElement('div');
     questionDiv.textContent = `Pregunta: ${answers[0].questionTxt}`;
+    questionDiv.classList.add("miniTitle");
     containerAnswers.appendChild(questionDiv);
 
     // Mostramos las respuestas con su respectivo contador
@@ -113,4 +121,14 @@ function getAnswersByQuestionId(count) {
     }
 }
 
+function nextAnswers() {
+    showDivAnswers();
+    count = count + 1;
+    showAnswers(count);
+}
+function preAnswers() {
+    showDivAnswers();
+    count = count - 1;
+    showAnswers(count);
+}
 
