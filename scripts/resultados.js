@@ -42,7 +42,7 @@ async function displayGames() {
 async function showAllAnswers(gameId) {
     showDivAnswers();
     answers = await Answer.getByGame(gameId);
-    questionsIds = [...new Set(answers.map(answer => answer.questionId))];
+    questionsIds = [...new Set(answers.map(answer => JSON.stringify({ questionId: answer.questionId, questionTxt: answer.questionTxt })))].map(item => JSON.parse(item));
     console.log(questionsIds);
     console.log(answers);
     showAnswers(count);
@@ -80,55 +80,57 @@ function showDivAnswers() {
 async function showAnswers(count) {
     const filtredAnswersbyQuestionId = getAnswersByQuestionId(count);
     let answerCount = {}; // Objeto para contar las respuestas
-
-    // Primero contamos cuántas veces aparece cada respuesta
-    filtredAnswersbyQuestionId.forEach((answer) => {
-        if (answer.answer) {
-            if (answerCount[answer.answer]) {
-                answerCount[answer.answer]++;
-            } else {
-                answerCount[answer.answer] = 1;
+    console.log(filtredAnswersbyQuestionId);
+    if (filtredAnswersbyQuestionId && filtredAnswersbyQuestionId.length > 0) {
+        // Primero contamos cuántas veces aparece cada respuesta
+        filtredAnswersbyQuestionId.forEach((answer) => {
+            if (answer.answer) {
+                if (answerCount[answer.answer]) {
+                    answerCount[answer.answer]++;
+                } else {
+                    answerCount[answer.answer] = 1;
+                }
             }
-        }
-    });
+        });
 
-    const questionDiv = document.createElement('div');
-    questionDiv.textContent = `Pregunta: ${answers[0].questionTxt}`;
-    questionDiv.classList.add("miniTitle");
-    containerAnswers.appendChild(questionDiv);
+        const questionDiv = document.createElement('div');
+        questionDiv.textContent = `Pregunta: ${questionsIds[count].questionTxt}`;
+        questionDiv.classList.add("miniTitle");
+        containerAnswers.appendChild(questionDiv);
 
-    // Mostramos las respuestas con su respectivo contador
-    for (const [answerText, count] of Object.entries(answerCount)) {
-        const answerDiv = document.createElement('div');
-        if (count > 1) {
-            answerDiv.textContent = `respuesta: ${answerText} x${count}`;
-        } else {
-            answerDiv.textContent = `respuesta: ${answerText}`;
+        // Mostramos las respuestas con su respectivo contador
+        for (const [answerText, count] of Object.entries(answerCount)) {
+            const answerDiv = document.createElement('div');
+            if (count > 1) {
+                answerDiv.textContent = `respuesta: ${answerText} x${count}`;
+            } else {
+                answerDiv.textContent = `respuesta: ${answerText}`;
+            }
+            answerDiv.id = answerText;
+            containerAnswers.appendChild(answerDiv);
         }
-        answerDiv.id = answerText;
-        containerAnswers.appendChild(answerDiv);
     }
 }
 
 function getAnswersByQuestionId(count) {
-    if (count >= 0 && count < questionsIds.length) {
-        const questionId = questionsIds[count]; 
+    if (count >= 0) {
+        const questionId = questionsIds[count].questionId;
 
-        return answers.filter(respuesta => respuesta.questionId === questionId);;
+        return answers.filter(respuesta => respuesta.questionId === questionId);
     } else {
-        console.error("Indice fuera de rango.");
         return [];
     }
 }
 
 function nextAnswers() {
     showDivAnswers();
-    count = count + 1;
+    console.log(count);
+    if (count < questionsIds.length -1) count += 1;
     showAnswers(count);
 }
 function preAnswers() {
     showDivAnswers();
-    count = count - 1;
+    if (count > 0) count -= 1;
     showAnswers(count);
 }
 
