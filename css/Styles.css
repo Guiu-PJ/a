@@ -12,6 +12,12 @@
     z-index: 1000; /* Asegura que est� por encima de otros elementos */
 }
 
+.divRuleta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 .miniTitle {
     font-size: 2em; 
