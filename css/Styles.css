@@ -34,13 +34,37 @@ body {
 #game {
     background-color: #ffffff;
     padding: 20px;
-    margin: 0 auto;
+    margin: 20px auto; /* Asegura que haya margen en los lados y en la parte superior */
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box; /* Asegura que el padding no aumente el ancho del contenedor */
-    max-width: 100%;
+    box-sizing: border-box;
+    max-width: 600px; /* Limita el ancho máximo en pantallas grandes */
+    width: 90%; /* Usa un ancho del 90% para que se adapte a móviles */
     text-align: center;
 }
+
+@media (max-width: 600px) {
+    #game {
+        padding: 15px; /* Reduce el padding en móviles para más espacio */
+        width: 95%; /* Ocupa un 95% del ancho de la pantalla en móviles */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Ajusta el tamaño de la fuente del título en móviles */
+    }
+
+    .small-text {
+        font-size: 0.8em; /* Ajusta la fuente de "david una mica" en móviles */
+    }
+
+    button {
+        font-size: 0.9em; /* Botones más pequeños en móviles */
+        padding: 10px;
+        width: 100%; /* Botones ocupan todo el ancho en móviles */
+        max-width: 250px; /* Limita el ancho máximo de los botones */
+    }
+}
+
 
 h1 {
     font-size: 24px;
@@ -76,7 +100,7 @@ a button {
 }
 
 .main-title {
-    font-size: 6.0em;
+    font-size: 3.0em;
     color: rgb(172, 4, 4);
 }
 
