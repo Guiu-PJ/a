@@ -53,6 +53,11 @@ body {
         font-size: 1.5em; /* Ajusta el tamaño de la fuente del título en móviles */
     }
 
+    .main-title {
+        font-size: 1.0em;
+        color: rgb(172, 4, 4);
+    }
+
     .small-text {
         font-size: 0.8em; /* Ajusta la fuente de "david una mica" en móviles */
     }
