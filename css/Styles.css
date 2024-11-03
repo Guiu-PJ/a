@@ -34,8 +34,11 @@ body {
 #game {
     background-color: #ffffff;
     padding: 20px;
+    margin: 0 auto;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /* Asegura que el padding no aumente el ancho del contenedor */
+    max-width: 100%;
     text-align: center;
 }
 
@@ -45,6 +48,8 @@ h1 {
 }
 
 button {
+    width: 100%; /* Ocupa todo el ancho en móviles */
+    max-width: 300px;
     background-color: #4CAF50; /* Verde */
     color: white;
     padding: 10px 20px;
@@ -52,6 +57,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin: 5px;
+    font-size: 1em;
 }
 
 button:hover {
