@@ -9,7 +9,7 @@
     border: 1px solid black; /* Borde negro alrededor del div */
     padding: 20px; /* Espacio interno */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle un aspecto flotante */
-    z-index: 1000; /* Asegura que est� por encima de otros elementos */
+    z-index: 1000; /* Asegura que est� por encima de otros elementos */
 }
 
 
@@ -20,4 +20,102 @@
     color: #333;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Fondo claro */
+    color: #333; /* Texto oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#game {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px auto; /* Asegura que haya margen en los lados y en la parte superior */
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    max-width: 600px; /* Limita el ancho máximo en pantallas grandes */
+    width: 90%; /* Usa un ancho del 90% para que se adapte a móviles */
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    #game {
+        padding: 15px; /* Reduce el padding en móviles para más espacio */
+        width: 95%; /* Ocupa un 95% del ancho de la pantalla en móviles */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Ajusta el tamaño de la fuente del título en móviles */
+    }
+
+    .main-title {
+        font-size: 1.0em;
+        color: rgb(172, 4, 4);
+    }
+
+    .small-text {
+        font-size: 0.8em; /* Ajusta la fuente de "david una mica" en móviles */
+    }
+
+    button {
+        font-size: 0.9em; /* Botones más pequeños en móviles */
+        padding: 10px;
+        width: 100%; /* Botones ocupan todo el ancho en móviles */
+        max-width: 250px; /* Limita el ancho máximo de los botones */
+    }
+}
+
+
+h1 {
+    font-size: 24px;
+    color: #333333;
+}
+
+button {
+    width: 100%; /* Ocupa todo el ancho en móviles */
+    max-width: 300px;
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+a button {
+    text-decoration: none;
+    color: white;
+}
+
+#game img {
+    width: 100px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+}
+
+.main-title {
+    font-size: 3.0em;
+    color: rgb(172, 4, 4);
+}
+
+
+.big-text {
+    font-size: 1.6em;
+}
+
+
+.small-text {
+    font-size: 0.6em;
+}
 
