@@ -1,10 +1,10 @@
 // Variables y constantes globales
-const options = ["Cosa 1", "Cosa 2", "Cosa 3", "Cosa 4", "Cosa 5", "Cosa 6", "Cosa 7", "Cosa 8", "Cosa 9"];
+const options = ["Reparteix 5 tragos", "Reparteix 10 tragos", "Reparteix un xupito", "Beu 5 tragos", "Beu 10 tragos", "Beu un xupito", "Tots els que mai han ficat casa xupito o 3 tragos", "Cosa 8", "Cosa 9"];
 let startAngle = 0;
 const arc = Math.PI / (options.length / 2);
 let spinTimeout = null;
 
-let spinAngleStart = 0;  // Ángulo de inicio del giro
+let spinAngleStart = 0;  // Ãngulo de inicio del giro
 let spinTime = 0;        // Tiempo de giro actual
 let spinTimeTotal = 0;   // Tiempo total de giro
 
@@ -15,7 +15,7 @@ let red = 0;
 let green = 0;
 let blue = 0;
 
-// Evento para iniciar la ruleta al hacer clic en el botón
+// Evento para iniciar la ruleta al hacer clic en el botÃ³n
 document.getElementById("spin").addEventListener("click", spin);
 
 // Funciones para manejo de color y dibujo
@@ -59,14 +59,14 @@ function drawRouletteWheel() {
             const angle = startAngle + i * arc;
             ctx.fillStyle = getColor(i, options.length);
 
-            // Dibuja cada sección de la ruleta
+            // Dibuja cada secciÃ³n de la ruleta
             ctx.beginPath();
             ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
             ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
             ctx.stroke();
             ctx.fill();
 
-            // Configuración de texto
+            // ConfiguraciÃ³n de texto
             ctx.save();
             ctx.fillStyle = "black";
             ctx.translate(
@@ -75,7 +75,7 @@ function drawRouletteWheel() {
             );
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
 
-            // Divide texto en líneas si es largo
+            // Divide texto en lÃ­neas si es largo
             const text = options[i];
             const maxWidth = 50;
             const words = text.split(" ");
@@ -94,7 +94,7 @@ function drawRouletteWheel() {
             }
             lines.push(line);
 
-            // Dibuja texto centrado en varias líneas
+            // Dibuja texto centrado en varias lÃ­neas
             for (let j = 0; j < lines.length; j++) {
                 ctx.fillText(lines[j], -ctx.measureText(lines[j]).width / 2, j * 15);
             }
@@ -118,7 +118,7 @@ function drawRouletteWheel() {
 }
 
 function spin() {
-    spinAngleStart = Math.random() * 10 + 15;  // Define el ángulo inicial de giro
+    spinAngleStart = Math.random() * 10 + 15;  // Define el Ã¡ngulo inicial de giro
     spinTime = 0;
     spinTimeTotal = Math.random() * 3 + 8 * 1000;  // Tiempo total de giro
     rotateWheel();
