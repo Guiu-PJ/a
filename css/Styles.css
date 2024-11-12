@@ -33,8 +33,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    /*height: 100vh;*/
+    margin: 5%;
 }
 
 #game {
@@ -74,6 +74,38 @@ body {
         width: 100%; /* Botones ocupan todo el ancho en móviles */
         max-width: 250px; /* Limita el ancho máximo de los botones */
     }
+
+    #divGameModes {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center; 
+        width: 100%; 
+    }
+
+        #divGameModes > div:not(.line) {
+            padding: 5%;
+            width: 80%;
+            text-align: center;
+        }
+
+    #createGameMode{
+        width: 100%;
+    }
+
+    #crearPartida {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .line {
+        width: 100%; 
+        height: 2px; 
+        background-color: #ccc;
+        margin: 10px 0; 
+    }
+
 }
 
 

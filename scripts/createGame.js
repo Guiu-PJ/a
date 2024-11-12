@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 async function displayGameModes() {
     const gameModes = await getAllGameMode(); // Esperar a que se resuelvan los datos
-    const container = document.getElementById('a'); // Obtener el elemento <p> donde se mostrará la lista
+    const container = document.getElementById('divGameModes'); // Obtener el elemento <p> donde se mostrará la lista
     container.innerHTML = ''; // Limpiar cualquier contenido previo
 
     if (!gameModes || gameModes.length === 0) { // Verificar si gameModes es null o está vacío
@@ -35,14 +35,22 @@ async function displayGameModes() {
         return;
     }
 
+    const line = document.createElement('div');
+    line.classList.add('line'); 
+    container.appendChild(line); 
+
     gameModes.forEach(gameMode => {
         const gameModeDiv = document.createElement('div');
-        gameModeDiv.textContent = `ID: ${gameMode.id}, Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
+        gameModeDiv.textContent = `Nombre: ${gameMode.name}, Mode: ${gameMode.mode}`;
             gameModeDiv.addEventListener('click', async () => {
             await createGame(gameMode.id);
             //window.location.href = '../index.html'; 
         });
+        const line = document.createElement('div');
+        line.classList.add('line'); 
+
         container.appendChild(gameModeDiv);
+        container.appendChild(line); 
     });
 }
 

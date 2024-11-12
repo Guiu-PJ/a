@@ -1,6 +1,14 @@
 // Variables y constantes globales
-const options = ["Reparteix 5 tragos", "Reparteix 10 tragos", "Reparteix un xupito", "Beu 5 tragos", "Beu 10 tragos", "Beu un xupito", "Tots els que mai han ficat casa xupito o 3 tragos", "Cosa 8", "Cosa 9"];
-let startAngle = 0;
+const options = [
+    ["Reparteix 5 tragos", "Reparteix 5 tragos"],
+    ["Reparteix 10 tragos", "Reparteix 10 tragos"],
+    ["Reparteix un xupito", "Reparteix un xupito"],
+    ["Beu 5 tragos", "Beu 5 tragos"],
+    ["Beu 10 tragos", "Beu 10 tragos"],
+    ["Beu un xupito", "Beu un xupito"],
+    ["Mai casa", "Tots els que mai han ficat casa xupito o 3 tragos"],
+];
+
 const arc = Math.PI / (options.length / 2);
 let spinTimeout = null;
 
@@ -75,8 +83,8 @@ function drawRouletteWheel() {
             );
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
 
-            // Divide texto en líneas si es largo
-            const text = options[i];
+            // Texto a mostrar en las casillas (posici�n 0 del sub-array)
+            const text = options[i][0];
             const maxWidth = 50;
             const words = text.split(" ");
             let line = "";
@@ -141,10 +149,47 @@ function stopRotateWheel() {
     const degrees = startAngle * 180 / Math.PI + 90;
     const arcd = arc * 180 / Math.PI;
     const index = Math.floor((360 - degrees % 360) / arcd);
+
+    // Guardamos el contexto y dibujamos el mensaje en el centro
     ctx.save();
-    ctx.font = 'bold 30px Helvetica, Arial';
-    const text = options[index];
-    ctx.fillText(text, 250 - ctx.measureText(text).width / 2, 250 + 10);
+    ctx.font = 'bold 20px Helvetica, Arial';
+
+    // Obtenemos el texto de la posici�n 1 del sub-array
+    const text = options[index][1];
+
+    // Configuraci�n del fondo detr�s del mensaje
+    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    const padding = 10;
+    const maxTextWidth = canvas.width * 0.6; // M�ximo ancho de texto basado en el tama�o del canvas
+
+    // Dividir el texto en l�neas en funci�n del ancho m�ximo permitido
+    const words = text.split(" ");
+    let line = "";
+    const lines = [];
+
+    for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + " ";
+        const testWidth = ctx.measureText(testLine).width;
+        if (testWidth > maxTextWidth && line.length > 0) {
+            lines.push(line);
+            line = words[n] + " ";
+        } else {
+            line = testLine;
+        }
+    }
+    lines.push(line); // A�adir la �ltima l�nea
+
+    // Calcular la altura total del texto y dibujar el fondo en el centro
+    const lineHeight = 24;
+    const textHeight = lines.length * lineHeight;
+    ctx.fillRect(250 - maxTextWidth / 2 - padding, 250 - textHeight / 2 - padding, maxTextWidth + padding * 2, textHeight + padding * 2);
+
+    // Dibujar cada l�nea de texto centrada
+    ctx.fillStyle = "black";
+    for (let i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], 250 - ctx.measureText(lines[i]).width / 2, 250 - textHeight / 2 + i * lineHeight + 10);
+    }
+
     ctx.restore();
 }
 
