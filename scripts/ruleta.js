@@ -9,11 +9,10 @@ const options = [
     ["Mai casa", "Tots els que mai han ficat casa xupito o 3 tragos"],
 ];
 
-let startAngle = 0;
 const arc = Math.PI / (options.length / 2);
 let spinTimeout = null;
 
-let spinAngleStart = 0;  // ¡ngulo de inicio del giro
+let spinAngleStart = 0;  // √Ångulo de inicio del giro
 let spinTime = 0;        // Tiempo de giro actual
 let spinTimeTotal = 0;   // Tiempo total de giro
 
@@ -24,7 +23,7 @@ let red = 0;
 let green = 0;
 let blue = 0;
 
-// Evento para iniciar la ruleta al hacer clic en el botÛn
+// Evento para iniciar la ruleta al hacer clic en el bot√≥n
 document.getElementById("spin").addEventListener("click", spin);
 
 // Funciones para manejo de color y dibujo
@@ -68,14 +67,14 @@ function drawRouletteWheel() {
             const angle = startAngle + i * arc;
             ctx.fillStyle = getColor(i, options.length);
 
-            // Dibuja cada secciÛn de la ruleta
+            // Dibuja cada secci√≥n de la ruleta
             ctx.beginPath();
             ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
             ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
             ctx.stroke();
             ctx.fill();
 
-            // ConfiguraciÛn de texto
+            // Configuraci√≥n de texto
             ctx.save();
             ctx.fillStyle = "black";
             ctx.translate(
@@ -84,7 +83,7 @@ function drawRouletteWheel() {
             );
             ctx.rotate(angle + arc / 2 + Math.PI / 2);
 
-            // Texto a mostrar en las casillas (posiciÛn 0 del sub-array)
+            // Texto a mostrar en las casillas (posiciÔøΩn 0 del sub-array)
             const text = options[i][0];
             const maxWidth = 50;
             const words = text.split(" ");
@@ -103,7 +102,7 @@ function drawRouletteWheel() {
             }
             lines.push(line);
 
-            // Dibuja texto centrado en varias lÌneas
+            // Dibuja texto centrado en varias l√≠neas
             for (let j = 0; j < lines.length; j++) {
                 ctx.fillText(lines[j], -ctx.measureText(lines[j]).width / 2, j * 15);
             }
@@ -127,7 +126,7 @@ function drawRouletteWheel() {
 }
 
 function spin() {
-    spinAngleStart = Math.random() * 10 + 15;  // Define el ·ngulo inicial de giro
+    spinAngleStart = Math.random() * 10 + 15;  // Define el √°ngulo inicial de giro
     spinTime = 0;
     spinTimeTotal = Math.random() * 3 + 8 * 1000;  // Tiempo total de giro
     rotateWheel();
@@ -155,15 +154,15 @@ function stopRotateWheel() {
     ctx.save();
     ctx.font = 'bold 20px Helvetica, Arial';
 
-    // Obtenemos el texto de la posiciÛn 1 del sub-array
+    // Obtenemos el texto de la posiciÔøΩn 1 del sub-array
     const text = options[index][1];
 
-    // ConfiguraciÛn del fondo detr·s del mensaje
+    // ConfiguraciÔøΩn del fondo detrÔøΩs del mensaje
     ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
     const padding = 10;
-    const maxTextWidth = canvas.width * 0.6; // M·ximo ancho de texto basado en el tamaÒo del canvas
+    const maxTextWidth = canvas.width * 0.6; // MÔøΩximo ancho de texto basado en el tamaÔøΩo del canvas
 
-    // Dividir el texto en lÌneas en funciÛn del ancho m·ximo permitido
+    // Dividir el texto en lÔøΩneas en funciÔøΩn del ancho mÔøΩximo permitido
     const words = text.split(" ");
     let line = "";
     const lines = [];
@@ -178,14 +177,14 @@ function stopRotateWheel() {
             line = testLine;
         }
     }
-    lines.push(line); // AÒadir la ˙ltima lÌnea
+    lines.push(line); // AÔøΩadir la ÔøΩltima lÔøΩnea
 
     // Calcular la altura total del texto y dibujar el fondo en el centro
     const lineHeight = 24;
     const textHeight = lines.length * lineHeight;
     ctx.fillRect(250 - maxTextWidth / 2 - padding, 250 - textHeight / 2 - padding, maxTextWidth + padding * 2, textHeight + padding * 2);
 
-    // Dibujar cada lÌnea de texto centrada
+    // Dibujar cada lÔøΩnea de texto centrada
     ctx.fillStyle = "black";
     for (let i = 0; i < lines.length; i++) {
         ctx.fillText(lines[i], 250 - ctx.measureText(lines[i]).width / 2, 250 - textHeight / 2 + i * lineHeight + 10);
