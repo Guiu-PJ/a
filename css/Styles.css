@@ -75,7 +75,7 @@ body {
         max-width: 250px; /* Limita el ancho máximo de los botones */
     }
 
-    #divGameModes {
+    #divGameModes, #a {
         display: flex;
         flex-direction: column;
         justify-content: center; 
@@ -83,10 +83,14 @@ body {
         width: 100%; 
     }
 
-        #divGameModes > div:not(.line) {
+        #divGameModes, #a > div:not(.line) {
             padding: 5%;
             width: 80%;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow: scroll;
         }
 
     #createGameMode{
@@ -106,7 +110,30 @@ body {
         margin: 10px 0; 
     }
 
+    h4 {
+        text-align: center;
+    }
+
+
+    #btnBorrar {
+        width: fit-content;
+        background-color: red;
+        float: right;
+    }
+
+    #b {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btnAdmin{
+        width: fit-content;
+    }
+
 }
+
+
 
 
 h1 {

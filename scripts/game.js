@@ -56,7 +56,7 @@ async function displayPlayersInGame() {
 
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Borrar';
-                deleteButton.id = 'divAdmin';
+                deleteButton.id = 'btnBorrar';
 
                 deleteButton.addEventListener('click', async () => {
                     console.log(`Botón del jugador ${game.players[playerId].name} presionado`);
