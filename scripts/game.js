@@ -238,7 +238,7 @@ async function updateGameStatus(newStatus) {
 async function showQuestion(question) {
     container.innerHTML = '';
     const questionDiv = document.createElement('div');
-    questionDiv.textContent = "Pregunta: " + question.question;
+    questionDiv.textContent = question.question;
     container.appendChild(questionDiv);
     if (game != null) {
         const gameData = game;
