@@ -7,6 +7,8 @@ const options = [
     ["Beu 10 tragos", "Beu 10 tragos"],
     ["Beu un xupito", "Beu un xupito"],
     ["Mai casa", "Tots els que mai han ficat casa xupito o 3 tragos"],
+    ["Xupito doble", "Beveu un xupito encreuant el braç amb la persona de la teva dreta"],
+
 ];
 
 const arc = Math.PI / (options.length / 2);
@@ -16,7 +18,8 @@ let spinAngleStart = 0;  // Ángulo de inicio del giro
 let spinTime = 0;        // Tiempo de giro actual
 let spinTimeTotal = 0;   // Tiempo total de giro
 
-let ctx; // Contexto de dibujo para el canvas
+let startAngle = 0;     // Ángulo inicial de la ruleta
+let ctx;                // Contexto de dibujo para el canvas
 
 // Colores RGB
 let red = 0;

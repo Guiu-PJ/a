@@ -2,6 +2,8 @@ import { getGameById, getQuestionsByGameMode, getGameRef, saveAnswer } from '../
 import Game from '../models/Game.js';
 import { onSnapshot, updateDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 import Answer from '../models/Answer.js'
+import { increment } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+
 
 let questions = [], currentQuestionIndex = null, answers = [];
 const gameId = sessionStorage.getItem('gameId');
@@ -301,19 +303,25 @@ async function handlePlayerButtonClick(player, question) {
         console.log("Jugador seleccionado: " + player.name);
         let playerId = sessionStorage.getItem('playerId') || "admin";
         sessionStorage.setItem('resp', 1);
-        game.cont = game.cont + 1;
-        await game.save(true);
+
+        // Incrementar el contador de manera atómica
+        try {
+            await updateDoc(gameRef, { cont: increment(1) });
+        } catch (error) {
+            console.error('Error al incrementar el contador:', error);
+        }
+
+        // Guardar la respuesta
         const answer = new Answer(playerId, gameDoc.id, question.id, question.question, player.name);
         saveAnswer(answer)
             .then(() => {
                 alert('¡Answer creada y guardada con éxito!');
             })
             .catch(error => {
-                console.error('Error al guardar la pregunta:', error);
-                alert('Error al crear la pregunta.');
+                console.error('Error al guardar la respuesta:', error);
+                alert('Error al crear la respuesta.');
             });
     }
-
 }
 
 async function reloadGame() {
