@@ -58,6 +58,13 @@ async function displayPlayersInGame() {
             if (storedOrder) {
                 // Recuperar el orden almacenado
                 playersArray = JSON.parse(storedOrder);
+                if (playersArray.length === 0) {
+                    playersArray = Object.values(game.players).sort((a, b) => {
+                        return a.name.localeCompare(b.name); // Orden inicial alfabético
+                    });
+                    sessionStorage.setItem('playersOrder', JSON.stringify(playersArray));
+                    console.log('8');
+                }
                 console.log('3');
             } else {
                 // Generar el orden inicial y almacenarlo
