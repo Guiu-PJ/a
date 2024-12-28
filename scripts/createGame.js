@@ -78,7 +78,7 @@ async function createGame(gameModeId) {
         // Guardar nueva partida en Firestore
         saveGame(newGame)
             .then(() => {
-                alert('¡Game creado y guardado con éxito!');
+                alert('¡Game creado y guardado con éxito!' + "id: " + newGame.id);
             })
             .catch(error => {
                 console.error('Error al guardar la partida:', error);

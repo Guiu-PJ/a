@@ -77,19 +77,21 @@ async function displayPlayersInGame() {
 
             for (const player of playersArray) {
                 const playerDiv = document.createElement('div');
-                playerDiv.textContent = `Jugador: ${player.name}`;
+                playerDiv.textContent = `${player.name}`;
                 console.log('5');
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Borrar';
-                deleteButton.id = 'btnBorrar';
-                console.log('6');
-                deleteButton.addEventListener('click', async () => {
-                    console.log(`Botón del jugador ${player.name} presionado`);
-                    game.removePlayer(player.name);
-                    await game.save(false);
-                });
+                if (sessionStorage.getItem('playerName') === "admin") {
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Borrar';
+                    deleteButton.id = 'btnBorrar';
+                    console.log('6');
+                    deleteButton.addEventListener('click', async () => {
+                        console.log(`Botón del jugador ${player.name} presionado`);
+                        game.removePlayer(player.name);
+                        await game.save(false);
+                    });
+                    playerDiv.appendChild(deleteButton);
+                }
                 console.log('7');
-                playerDiv.appendChild(deleteButton);
                 container.appendChild(playerDiv);
             }
         } else {
@@ -276,6 +278,8 @@ async function showQuestion(question) {
     container.innerHTML = '';
     const questionDiv = document.createElement('div');
     questionDiv.textContent = question.question;
+    questionDiv.style.fontWeight = 'bold';
+    questionDiv.style.fontSize = '24px';
     container.appendChild(questionDiv);
 
     if (game != null) {
@@ -284,8 +288,12 @@ async function showQuestion(question) {
 
         // Recuperar el orden almacenado
         const storedOrder = sessionStorage.getItem('playersOrder');
-        if (storedOrder) {
+        if (storedOrder || true) {
             playersArray = JSON.parse(storedOrder);
+
+            playersArray = Object.values(gameData.players).sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
         } else {
             // Si no hay un orden almacenado, crearlo y guardarlo
             playersArray = Object.values(gameData.players).sort((a, b) => {
@@ -295,13 +303,15 @@ async function showQuestion(question) {
         }
 
         // Mostrar los botones de los jugadores en el orden determinado
-        for (const player of playersArray) {
-            const playerButton = document.createElement('button');
-            playerButton.textContent = player.name;
+        if (sessionStorage.getItem('playerName') != "admin") {
+            for (const player of playersArray) {
+                const playerButton = document.createElement('button');
+                playerButton.textContent = player.name;
 
-            playerButton.addEventListener('click', () => handlePlayerButtonClick(player, question));
+                playerButton.addEventListener('click', () => handlePlayerButtonClick(player, question));
 
-            container.appendChild(playerButton);
+                container.appendChild(playerButton);
+            }
         }
     }
 }
