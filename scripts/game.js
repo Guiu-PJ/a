@@ -48,37 +48,40 @@ document.addEventListener("DOMContentLoaded", async function () {
 async function displayPlayersInGame() {
     try {
         if (game != null) {
+            console.log('1');
             container.innerHTML = '';
             sessionStorage.setItem('modeId', game.modeId);
             numPlayers = Object.keys(game.players).length;
-
+            console.log('2');
             let playersArray;
             const storedOrder = sessionStorage.getItem('playersOrder');
             if (storedOrder) {
                 // Recuperar el orden almacenado
                 playersArray = JSON.parse(storedOrder);
+                console.log('3');
             } else {
                 // Generar el orden inicial y almacenarlo
                 playersArray = Object.values(game.players).sort((a, b) => {
                     return a.name.localeCompare(b.name); // Orden inicial alfabético
                 });
                 sessionStorage.setItem('playersOrder', JSON.stringify(playersArray));
+                console.log('4');
             }
 
             for (const player of playersArray) {
                 const playerDiv = document.createElement('div');
                 playerDiv.textContent = `Jugador: ${player.name}`;
-
+                console.log('5');
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Borrar';
                 deleteButton.id = 'btnBorrar';
-
+                console.log('6');
                 deleteButton.addEventListener('click', async () => {
                     console.log(`Botón del jugador ${player.name} presionado`);
                     game.removePlayer(player.name);
                     await game.save(false);
                 });
-
+                console.log('7');
                 playerDiv.appendChild(deleteButton);
                 container.appendChild(playerDiv);
             }
