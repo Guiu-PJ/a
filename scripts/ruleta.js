@@ -1,14 +1,29 @@
 // Variables y constantes globales
 const options = [
+    ["Reparteix 2 tragos", "Reparteix 2 tragos"],
     ["Reparteix 5 tragos", "Reparteix 5 tragos"],
     ["Reparteix 10 tragos", "Reparteix 10 tragos"],
     ["Reparteix un xupito", "Reparteix un xupito"],
+    ["Beu 2 tragos", "Beu 2 tragos"],
     ["Beu 5 tragos", "Beu 5 tragos"],
     ["Beu 10 tragos", "Beu 10 tragos"],
     ["Beu un xupito", "Beu un xupito"],
-    ["Mai casa", "Tots els que mai han ficat casa xupito o 3 tragos"],
+    ["Mai casa", "Tots els que mai han ficat casa xupito o 3 tragos."],
     ["Xupito doble", "Beveu un xupito encreuant el braç amb la persona de la teva dreta"],
-
+    ["Veritat", "Algú et fa una pregunta. Has de respondre-la amb sinceritat o veure 10 tragos."],
+    ["Històries", "Explica dos històries: una veritat que t'avergonyeixis d’explicar i una mentida. Quan acabis no desvelis quina és quina, mai ningú ho sabrà."],
+    ["Beethoven", "Sant Hilari del que tinguis al vas, dona igual la quantitat que tinguis."],
+    ["Canvi!", "Anem a sortir de la nostra zona de confort, cadascú canvia de lloc. Qui s’hi nega veu 5 tragos."],
+    ["Anfitrión", "Si has ficat casa algún cop reparteixes 10 tragos. Si no, en beus 5."],
+    ["Cubata extra!", "Fes-te ara mateix un altre cubata i ves a dos mans."],
+    ["Reparteix 2 tragos", "Reparteix 2 tragos"],
+    ["Reparteix 5 tragos", "Reparteix 5 tragos"],
+    ["Reparteix 10 tragos", "Reparteix 10 tragos"],
+    ["Reparteix un xupito", "Reparteix un xupito"],
+    ["Beu 2 tragos", "Beu 2 tragos"],
+    ["Beu 5 tragos", "Beu 5 tragos"],
+    ["Beu 10 tragos", "Beu 10 tragos"],
+    ["Beu un xupito", "Beu un xupito"],
 ];
 
 const arc = Math.PI / (options.length / 2);
