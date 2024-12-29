@@ -46,7 +46,7 @@ function showAnswers(count) {
 
     const questionDiv = document.createElement('div');
     questionDiv.textContent = `Pregunta ${count + 1}:\n ${options[count]}`;
-    questionDiv.classList.add("mainTitle");
+    questionDiv.classList.add("bigTitle");
     containerAnswers.appendChild(questionDiv);
 
 }
