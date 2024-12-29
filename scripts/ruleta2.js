@@ -60,14 +60,14 @@ function showDiv() {
     const buttonContainer = document.createElement('div');
     buttonContainer.classList.add('button-container'); // Aplica el estilo definido en CSS
 
-    const preAnswerButton = document.createElement('adminButton');
+    const preAnswerButton = document.createElement('button');
     preAnswerButton.textContent = "Anterior";
     preAnswerButton.addEventListener('click', () => {
         preAnswers();
     });
     buttonContainer.appendChild(preAnswerButton);
 
-    const nextAnswerButton = document.createElement('adminButton');
+    const nextAnswerButton = document.createElement('button');
     nextAnswerButton.textContent = "Siguiente";
     nextAnswerButton.addEventListener('click', () => {
         nextAnswers();
