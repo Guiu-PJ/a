@@ -75,6 +75,14 @@ body {
         max-width: 250px; /* Limita el ancho máximo de los botones */
     }
 
+
+    .adminButton {
+        font-size: 0.9em; 
+        padding: 10px;
+        width: 100%; 
+        max-width: 250px;
+    }
+
     #divGameModes, #a {
         display: flex;
         flex-direction: column;
@@ -133,9 +141,6 @@ body {
 
 }
 
-
-
-
 h1 {
     font-size: 24px;
     color: #333333;
@@ -154,11 +159,33 @@ button {
     font-size: 1em;
 }
 
+.adminButton {
+    width: 100%; /* Ocupa todo el ancho en móviles */
+    max-width: 300px;
+    background-color: #4c4eaf;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 1em;
+}
+
 button:hover {
-    background-color: #45a049;
+    background-color: #5cd362;
+}
+
+.adminButton:hover {
+    background-color: #5c99d3;
 }
 
 a button {
+    text-decoration: none;
+    color: white;
+}
+
+a .adminButton {
     text-decoration: none;
     color: white;
 }
