@@ -56,21 +56,28 @@ function showDiv() {
     containerAnswers.style.display = 'block';
     containerAnswers.innerHTML = '';
 
-    const preAnswerButton = document.createElement('button');
+    // Crear contenedor fijo para los botones
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container'); // Aplica el estilo definido en CSS
+
+    const preAnswerButton = document.createElement('adminButton');
     preAnswerButton.textContent = "Anterior";
     preAnswerButton.addEventListener('click', () => {
         preAnswers();
     });
-    containerAnswers.appendChild(preAnswerButton);
+    buttonContainer.appendChild(preAnswerButton);
 
-    const nextAnswerButton = document.createElement('button');
+    const nextAnswerButton = document.createElement('adminButton');
     nextAnswerButton.textContent = "Siguiente";
     nextAnswerButton.addEventListener('click', () => {
         nextAnswers();
     });
-    containerAnswers.appendChild(nextAnswerButton);
+    buttonContainer.appendChild(nextAnswerButton);
 
+    // Añadir pregunta primero
+    containerAnswers.appendChild(buttonContainer); // Agregar el contenedor de botones fijo
 }
+
 
 function nextAnswers() {
     showDiv();
