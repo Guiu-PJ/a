@@ -16,14 +16,7 @@ const options = [
     ["Canvi!", "Anem a sortir de la nostra zona de confort, cadascú canvia de lloc. Qui s’hi nega veu 5 tragos."],
     ["Anfitrión", "Si has ficat casa algún cop reparteixes 10 tragos. Si no, en beus 5."],
     ["Cubata extra!", "Fes-te ara mateix un altre cubata i ves a dos mans."],
-    ["Reparteix 2 tragos", "Reparteix 2 tragos"],
-    ["Reparteix 5 tragos", "Reparteix 5 tragos"],
-    ["Reparteix 10 tragos", "Reparteix 10 tragos"],
-    ["Reparteix un xupito", "Reparteix un xupito"],
-    ["Beu 2 tragos", "Beu 2 tragos"],
-    ["Beu 5 tragos", "Beu 5 tragos"],
-    ["Beu 10 tragos", "Beu 10 tragos"],
-    ["Beu un xupito", "Beu un xupito"],
+
 ];
 
 const arc = Math.PI / (options.length / 2);

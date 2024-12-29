@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 function showAnswers(count) {
 
     const questionDiv = document.createElement('div');
-    questionDiv.textContent = `Pregunta: ${options[count]}`;
-    questionDiv.classList.add("miniTitle");
+    questionDiv.textContent = `Pregunta ${count + 1}:\n ${options[count]}`;
+    questionDiv.classList.add("mainTitle");
     containerAnswers.appendChild(questionDiv);
 
 }
